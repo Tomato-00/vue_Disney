@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
+
 
 Vue.use(VueRouter);
 
@@ -19,6 +19,11 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
+  {
+    path:"/shop",
+    name:"Shop",
+    component:()=>import('@/views/ShopView.vue')
+  }
 ];
 
 const router = new VueRouter({
