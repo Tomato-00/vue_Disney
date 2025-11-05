@@ -143,4 +143,3 @@ A: 可以修改 `scripts/convert-to-webp.js` 中的 `inputDir` 路径，或者�
 
 ### Q: 转换后原图会被删除吗？
 A: 不会，原图会保留。WebP 是额外的优化版本，不会替换原图。
-

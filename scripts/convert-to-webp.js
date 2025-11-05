@@ -85,4 +85,3 @@ async function convertToWebp() {
 }
 
 convertToWebp();
-

@@ -4,7 +4,9 @@
       <div class="logo">
         <h1>
           <a href=""
-            ><img :src="require('@/assets/images/logo.jpg')" alt=""
+            ><img
+              :src="getWebPImage(require('@/assets/images/logo.jpg'))"
+              alt=""
           /></a>
         </h1>
       </div>
@@ -282,8 +284,11 @@
 </template>
 
 <script>
+import webpMixin from "@/utils/webpMixin";
+
 export default {
   name: "ShopView",
+  mixins: [webpMixin],
   data() {
     return {
       // 导航菜单
@@ -318,12 +323,7 @@ export default {
       ],
 
       // 轮播图数据
-      sliderImages: [
-        { src: require("@/assets/images/goods/soft（1）.png") },
-        { src: require("@/assets/images/goods/soft (2).png") },
-        { src: require("@/assets/images/goods/soft (3).png") },
-        { src: require("@/assets/images/goods/soft（4）.png") },
-      ],
+      sliderImages: [],
       currentSliderIndex: 0, // 当前轮播图索引
       autoPlayTimer: null, // 自动播放定时器
 
@@ -331,28 +331,28 @@ export default {
       softToys: [
         {
           id: 1,
-          image: require("@/assets/images/goods/soft（1）.png"),
+          image: null,
           title: "樱花物语",
           description: "官方史迪仔毛绒公仔",
           price: 199.0,
         },
         {
           id: 2,
-          image: require("@/assets/images/goods/soft (2).png"),
+          image: null,
           title: "甜心早餐",
           description: "维尼草莓熊毛绒玩偶",
           price: 199.0,
         },
         {
           id: 3,
-          image: require("@/assets/images/goods/soft (3).png"),
+          image: null,
           title: "雪人系列",
           description: "迪士尼雪人毛绒玩偶",
           price: 129.0,
         },
         {
           id: 4,
-          image: require("@/assets/images/goods/soft（4）.png"),
+          image: null,
           title: "睡衣系列",
           description: "玲娜贝儿毛绒玩偶",
           price: 219.0,
@@ -361,7 +361,7 @@ export default {
 
       // 特色商品（毛绒玩具的大商品）
       featuredSoftToy: {
-        image: require("@/assets/images/goods/soft.jpg"),
+        image: null,
         title: "畅销商品",
         description: "疯狂动物城尼克朱迪开心公仔一米毛绒玩偶",
         price: 399.0,
@@ -369,28 +369,28 @@ export default {
 
       // 饰品图片列表
       accessories: [
-        { id: 1, image: require("@/assets/images/goods/der1.jpg") },
-        { id: 2, image: require("@/assets/images/goods/der2.jpg") },
-        { id: 3, image: require("@/assets/images/goods/der3.jpg") },
+        { id: 1, image: null },
+        { id: 2, image: null },
+        { id: 3, image: null },
       ],
 
       // 盲盒商品
       blindBox: {
         featured: {
-          image: require("@/assets/images/goods/main.png"),
+          image: null,
           title: "TOP TOY搞怪日记系列手办盲盒",
           description: "迪士尼史迪奇搞怪日记盲盒玩具一套（6常规＋1隐藏）",
           price: 394.0,
         },
         miniBoxes: [
-          { id: 1, image: require("@/assets/images/goods/1.png") },
-          { id: 2, image: require("@/assets/images/goods/2.png") },
-          { id: 3, image: require("@/assets/images/goods/3.jpg") },
-          { id: 4, image: require("@/assets/images/goods/4.jpg") },
-          { id: 5, image: require("@/assets/images/goods/5.jpg") },
-          { id: 6, image: require("@/assets/images/goods/6.jpg") },
-          { id: 7, image: require("@/assets/images/goods/7.jpg") },
-          { id: 8, image: require("@/assets/images/goods/8.jpg") },
+          { id: 1, image: null },
+          { id: 2, image: null },
+          { id: 3, image: null },
+          { id: 4, image: null },
+          { id: 5, image: null },
+          { id: 6, image: null },
+          { id: 7, image: null },
+          { id: 8, image: null },
         ],
       },
 
@@ -447,8 +447,93 @@ export default {
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
+
+    // 初始化所有图片（使用 WebP 优化）
+    initImages() {
+      // 轮播图
+      this.sliderImages = [
+        {
+          src: this.getWebPImage(
+            require("@/assets/images/goods/soft（1）.png")
+          ),
+        },
+        {
+          src: this.getWebPImage(require("@/assets/images/goods/soft (2).png")),
+        },
+        {
+          src: this.getWebPImage(require("@/assets/images/goods/soft (3).png")),
+        },
+        {
+          src: this.getWebPImage(
+            require("@/assets/images/goods/soft（4）.png")
+          ),
+        },
+      ];
+
+      // 毛绒玩具
+      this.softToys[0].image = this.getWebPImage(
+        require("@/assets/images/goods/soft（1）.png")
+      );
+      this.softToys[1].image = this.getWebPImage(
+        require("@/assets/images/goods/soft (2).png")
+      );
+      this.softToys[2].image = this.getWebPImage(
+        require("@/assets/images/goods/soft (3).png")
+      );
+      this.softToys[3].image = this.getWebPImage(
+        require("@/assets/images/goods/soft（4）.png")
+      );
+
+      // 特色商品
+      this.featuredSoftToy.image = this.getWebPImage(
+        require("@/assets/images/goods/soft.jpg")
+      );
+
+      // 饰品
+      this.accessories[0].image = this.getWebPImage(
+        require("@/assets/images/goods/der1.jpg")
+      );
+      this.accessories[1].image = this.getWebPImage(
+        require("@/assets/images/goods/der2.jpg")
+      );
+      this.accessories[2].image = this.getWebPImage(
+        require("@/assets/images/goods/der3.jpg")
+      );
+
+      // 盲盒
+      this.blindBox.featured.image = this.getWebPImage(
+        require("@/assets/images/goods/main.png")
+      );
+      this.blindBox.miniBoxes[0].image = this.getWebPImage(
+        require("@/assets/images/goods/1.png")
+      );
+      this.blindBox.miniBoxes[1].image = this.getWebPImage(
+        require("@/assets/images/goods/2.png")
+      );
+      this.blindBox.miniBoxes[2].image = this.getWebPImage(
+        require("@/assets/images/goods/3.jpg")
+      );
+      this.blindBox.miniBoxes[3].image = this.getWebPImage(
+        require("@/assets/images/goods/4.jpg")
+      );
+      this.blindBox.miniBoxes[4].image = this.getWebPImage(
+        require("@/assets/images/goods/5.jpg")
+      );
+      this.blindBox.miniBoxes[5].image = this.getWebPImage(
+        require("@/assets/images/goods/6.jpg")
+      );
+      this.blindBox.miniBoxes[6].image = this.getWebPImage(
+        require("@/assets/images/goods/7.jpg")
+      );
+      this.blindBox.miniBoxes[7].image = this.getWebPImage(
+        require("@/assets/images/goods/8.jpg")
+      );
+    },
   },
   mounted() {
+    // 初始化图片（使用 WebP 优化）
+    this.initImages();
+
     // 启动轮播图自动播放
     this.autoPlayTimer = setInterval(() => {
       this.nextSlider();
