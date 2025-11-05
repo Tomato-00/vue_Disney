@@ -28,7 +28,7 @@
       <div class="top">
         <ul>
           <li v-for="category in categories" :key="category">
-            <a href=""></a>{{ category }}
+            <a href="">{{ category }}</a>
           </li>
         </ul>
       </div>
@@ -106,10 +106,10 @@
                   </div>
                   <div class="button-container">
                     <button class="cart-button" @click="addToCart(product)">
-                      <i class="fas fa-shopping-cart"></i>
+                      <i class="iconfont icon-shopshoppingco"></i>
                     </button>
                     <button class="buy-button" @click="buyNow(product)">
-                      <i class="fas fa-shopping-bag"></i>
+                      <i class="iconfont icon-pay"></i>
                     </button>
                   </div>
                 </div>
@@ -132,10 +132,10 @@
                     class="cart-button"
                     @click="addToCart(featuredSoftToy)"
                   >
-                    <i class="fas fa-shopping-cart"></i>
+                    <i class="iconfont icon-shopshoppingco"></i>
                   </button>
                   <button class="buy-button" @click="buyNow(featuredSoftToy)">
-                    <i class="fas fa-shopping-bag"></i>
+                    <i class="iconfont icon-shopshoppingco"></i>
                   </button>
                 </div>
               </div>
@@ -183,10 +183,10 @@
                     class="cart-button"
                     @click="addToCart(blindBox.featured)"
                   >
-                    <i class="fas fa-shopping-cart"></i>
+                    <i class="iconfont icon-shopshoppingco"></i>
                   </button>
                   <button class="buy-button" @click="buyNow(blindBox.featured)">
-                    <i class="fas fa-shopping-bag"></i>
+                    <i class="iconfont icon-pay"></i>
                   </button>
                 </div>
               </div>
