@@ -1,29 +1,6 @@
 <template>
   <div class="app">
-    <header>
-      <div class="logo">
-        <h1>
-          <a href=""
-            ><img
-              :src="getWebPImage(require('@/assets/images/logo.jpg'))"
-              alt=""
-          /></a>
-        </h1>
-      </div>
-      <div class="list">
-        <ul>
-          <li v-for="item in navMenu" :key="item.name">
-            <router-link :to="item.path">{{ item.name }}</router-link>
-          </li>
-        </ul>
-      </div>
-      <div class="search">
-        <input type="text" placeholder="search" />
-        <a href=""><span class="iconfont icon-sousuo"></span></a>
-        <a href="./注册.html" target="_blank"><button>注册</button></a>
-        <button>登录</button>
-      </div>
-    </header>
+    <Header :navMenu="navMenu" />
     <div class="wrapper">
       <div class="top">
         <ul>
@@ -284,10 +261,14 @@
 </template>
 
 <script>
+import Header from "@/components/HeaderCom.vue";
 import webpMixin from "@/utils/webpMixin";
 
 export default {
   name: "ShopView",
+  components: {
+    Header,
+  },
   mixins: [webpMixin],
   data() {
     return {
