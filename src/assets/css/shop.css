@@ -2,7 +2,7 @@ body {
     background-color: rgb(59, 45, 72);
 }
 .shop-header {
-    min-height: 60px;
+    min-height: 52px;
     background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(59,45,72,0.95) 100%);
     display: flex;
     flex-direction: column;
@@ -38,6 +38,18 @@ body {
     background: #fff;
     border-radius: 999px;
     transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.menu-toggle.active {
+    background: rgba(255, 255, 255, 0.2);
+}
+.menu-toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
 }
 .menu-toggle:hover {
     background: rgba(255, 255, 255, 0.2);
@@ -130,14 +142,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60px;
-    min-width: 72px;
+    height: 48px;
+    min-width: 64px;
 }
 .list li a,
 .list li .category-link {
     color: rgba(255,255,255,0.8);
     transition: all 0.3s ease;
-    padding: 8px 15px;
+    padding: 6px 12px;
     border-radius: 20px;
     position: relative;
 }
@@ -252,37 +264,115 @@ body {
     }
     .list {
         position: fixed;
-        top: 110px;
-        right: 16px;
-        width: 240px;
-        max-width: 80vw;
-        background: rgba(59, 45, 72, 0.95);
-        border-radius: 16px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-        padding: 20px 0;
-        transform: translateY(-20px);
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(82vw, 280px);
+        background: rgba(22, 15, 30, 0.96);
+        border-radius: 0 0 0 24px;
+        box-shadow: -4px 0 25px rgba(0, 0, 0, 0.45);
+        padding: 80px 20px 24px;
+        transform: translateX(110%);
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        transition: transform 0.35s ease, opacity 0.35s ease;
         z-index: 950;
+        overflow-y: auto;
+        -webkit-backdrop-filter: blur(18px);
+        backdrop-filter: blur(18px);
+        display: flex;
+        flex-direction: column;
+    }
+    .list::-webkit-scrollbar {
+        width: 6px;
+    }
+    .list::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+    }
+    .list::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .drawer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+    .drawer-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 1;
+        transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    .drawer-back:hover {
+        background: rgba(255, 255, 255, 0.16);
+        border-color: rgba(255, 255, 255, 0.24);
+    }
+    .drawer-back:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.5);
+        outline-offset: 2px;
+    }
+    .drawer-back-icon {
+        position: relative;
+        width: 12px;
+        height: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .drawer-back-icon::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-left: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: translateX(1px) rotate(45deg);
+    }
+    .drawer-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #ffffff;
+    }
+    .drawer-back-text {
+        letter-spacing: 1px;
     }
     .list ul {
         flex-direction: column;
         margin: 0;
         width: 100%;
+        gap: 10px;
+        align-items: stretch;
     }
     .list ul li {
         width: 100%;
         padding: 0;
         margin: 0;
+        display: flex;
     }
-    .list li a {
-        display: block;
+    .list li a,
+    .list li .category-link {
+        display: flex;
         width: 100%;
-        text-align: center;
+        justify-content: flex-start;
+        text-align: left;
+        padding: 12px 18px;
+        border-radius: 14px;
+        font-size: 15px;
+        gap: 10px;
     }
     .list.open {
-        transform: translateY(0);
+        transform: translateX(0);
         opacity: 1;
         pointer-events: auto;
     }

@@ -4,8 +4,11 @@
       <div class="header-main">
         <button
           class="menu-toggle"
+          :class="{ active: isMobileMenuOpen }"
           type="button"
           aria-label="Toggle navigation"
+          :aria-expanded="isMobileMenuOpen.toString()"
+          aria-controls="shop-categories"
           @click="toggleMobileMenu"
         >
           <span></span>
@@ -34,7 +37,25 @@
           <button class="auth-btn register" @click="openRegister">注册</button>
         </div>
       </div>
-      <div class="list" :class="{ open: isMobileMenuOpen }">
+      <div
+        id="shop-categories"
+        class="list"
+        :class="{ open: isMobileMenuOpen }"
+        role="navigation"
+        aria-label="商品分类"
+      >
+        <div class="drawer-header">
+          <button
+            type="button"
+            class="drawer-back"
+            aria-label="关闭分类菜单"
+            @click="closeMobileMenu"
+          >
+            <span class="drawer-back-icon" aria-hidden="true"></span>
+            <span class="drawer-back-text">返回</span>
+          </button>
+          <div class="drawer-title">全部分类</div>
+        </div>
         <ul>
           <li v-for="category in categories" :key="category">
             <button
@@ -341,10 +362,7 @@ export default {
         "服装",
         "饰品",
         "家具用品",
-        "收藏品",
-        "会员中心",
-        "购物车",
-        "客服",
+        "收藏品"
       ],
 
       // IP系列列表
