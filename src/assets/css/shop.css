@@ -18,6 +18,19 @@ body {
     align-items: center;
     gap: 12px;
 }
+.shop-header .logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 12px;
+    text-decoration: none;
+    line-height: 0;
+}
+.shop-header .logo img {
+    display: block;
+    height: 56px;
+    width: auto;
+}
 .menu-toggle {
     display: none;
     flex-direction: column;
@@ -26,9 +39,8 @@ body {
     gap: 5px;
     width: 44px;
     height: 44px;
-    border-radius: 50%;
     border: none;
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -38,9 +50,6 @@ body {
     background: #fff;
     border-radius: 999px;
     transition: transform 0.3s ease, opacity 0.3s ease;
-}
-.menu-toggle.active {
-    background: rgba(255, 255, 255, 0.2);
 }
 .menu-toggle.active span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
@@ -52,7 +61,6 @@ body {
     transform: translateY(-7px) rotate(-45deg);
 }
 .menu-toggle:hover {
-    background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
 }
 
@@ -107,8 +115,8 @@ body {
 }
 .auth-actions {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
+    align-items: center;
+    gap: 10px;
 }
 .auth-actions .auth-btn {
     padding: 6px 12px;
@@ -215,6 +223,13 @@ body {
     .shop-header .list {
         display: flex;
     }
+    .shop-header .logo {
+        order: 1;
+        padding-right: 8px;
+    }
+    .shop-header .logo img {
+        height: 44px;
+    }
     .shop-header .search-bar {
         order: 2;
         width: 100%;
@@ -242,6 +257,12 @@ body {
     .menu-toggle {
         display: flex;
         order: 1;
+        width: auto;
+        height: auto;
+        padding: 6px;
+    }
+    .shop-header .logo {
+        display: none;
     }
     .shop-header .search-bar {
         order: 2;

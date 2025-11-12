@@ -15,6 +15,9 @@
           <span></span>
           <span></span>
         </button>
+        <router-link to="/" class="logo" aria-label="返回首页">
+          <img v-if="logoImage" :src="logoImage" alt="Disney 商城" />
+        </router-link>
         <div class="search-bar">
           <input
             v-model="searchKeyword"
@@ -362,6 +365,7 @@ export default {
     return {
       isMobileMenuOpen: false,
       searchKeyword: "",
+      logoImage: null,
       bottomNav: [
         { name: "首页", path: "/", icon: "icon-dishini" },
         { name: "购物车", path: "/cart", icon: "icon-shopshoppingco" },
@@ -652,6 +656,12 @@ export default {
         require("@/assets/images/goods/8.jpg")
       );
     },
+  },
+  created() {
+    this.logoImage = this.selectImage(
+      () => require("@/assets/images/logo.jpg"),
+      () => require("@/assets/images/logo.webp")
+    );
   },
   watch: {
     $route() {
