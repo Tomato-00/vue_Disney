@@ -1,8 +1,18 @@
 <template>
   <div id="app">
     <router-view />
+    <AuthModal />
   </div>
 </template>
+
+<script>
+import AuthModal from "@/components/auth/AuthModal.vue";
+
+export default {
+  name: "App",
+  components: { AuthModal },
+};
+</script>
 
 <style lang="scss">
 #app {

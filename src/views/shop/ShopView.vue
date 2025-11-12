@@ -10,20 +10,37 @@
           /></a>
         </h1>
       </div>
-      <div class="list">
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Toggle navigation"
+        @click="toggleMobileMenu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="list" :class="{ open: isMobileMenuOpen }">
         <ul>
           <li v-for="item in navMenu" :key="item.name">
-            <router-link :to="item.path">{{ item.name }}</router-link>
+            <router-link :to="item.path" @click.native="closeMobileMenu">
+              {{ item.name }}
+            </router-link>
           </li>
         </ul>
       </div>
       <div class="search">
         <input type="text" placeholder="search" />
         <a href=""><span class="iconfont icon-sousuo"></span></a>
-        <a href="./注册.html" target="_blank"><button>注册</button></a>
-        <button>登录</button>
+        <button @click="openRegister">注册</button>
+        <button @click="openLogin">登录</button>
       </div>
     </header>
+    <div
+      v-if="isMobileMenuOpen"
+      class="mobile-overlay"
+      @click="closeMobileMenu"
+    ></div>
     <div class="wrapper">
       <div class="top">
         <ul>
@@ -291,6 +308,7 @@ export default {
   mixins: [webpMixin],
   data() {
     return {
+      isMobileMenuOpen: false,
       // 导航菜单
       navMenu: [
         { name: "首页", path: "/" },
@@ -413,6 +431,18 @@ export default {
     };
   },
   methods: {
+    toggleMobileMenu() {
+      this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    },
+    closeMobileMenu() {
+      this.isMobileMenuOpen = false;
+    },
+    openLogin() {
+      this.$store.dispatch("auth/open", "login");
+    },
+    openRegister() {
+      this.$store.dispatch("auth/open", "register");
+    },
     // 轮播图：下一张
     nextSlider() {
       this.currentSliderIndex =
@@ -528,6 +558,11 @@ export default {
       this.blindBox.miniBoxes[7].image = this.getWebPImage(
         require("@/assets/images/goods/8.jpg")
       );
+    },
+  },
+  watch: {
+    $route() {
+      this.isMobileMenuOpen = false;
     },
   },
   mounted() {
