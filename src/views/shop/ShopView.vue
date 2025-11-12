@@ -121,6 +121,19 @@
           <div class="slider-btn prev" @click="prevSlider">❮</div>
           <div class="slider-btn next" @click="nextSlider">❯</div>
         </div>
+        <div class="mobile-showcase">
+          <div
+            v-for="item in mobileShowcase"
+            :key="item.id"
+            class="mobile-showcase-card"
+          >
+            <img :src="item.image" :alt="item.title" />
+            <div class="mobile-showcase-info">
+              <h5>{{ item.title }}</h5>
+              <p>{{ item.subtitle }}</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="key">
         <ul>
@@ -186,7 +199,7 @@
                     <i class="iconfont icon-shopshoppingco"></i>
                   </button>
                   <button class="buy-button" @click="buyNow(featuredSoftToy)">
-                    <i class="iconfont icon-shopshoppingco"></i>
+                    <i class="iconfont icon-pay"></i>
                   </button>
                 </div>
               </div>
@@ -368,17 +381,18 @@ export default {
       // IP系列列表
       ipSeries: [
         "米奇米妮系列",
-        "冰雪奇缘系列",
-        "星球大战系列",
         "疯狂动物城系列",
         "漫威系列",
-        "维尼小熊系列",
+        "其他系列"
       ],
 
       // 轮播图数据
       sliderImages: [],
       currentSliderIndex: 0, // 当前轮播图索引
       autoPlayTimer: null, // 自动播放定时器
+
+      // 移动端陈列区
+      mobileShowcase: [],
 
       // 毛绒玩具商品列表
       softToys: [
@@ -538,6 +552,42 @@ export default {
         },
         {
           src: this.getWebPImage(
+            require("@/assets/images/goods/soft（4）.png")
+          ),
+        },
+      ];
+
+      // 移动端陈列区
+      this.mobileShowcase = [
+        {
+          id: 1,
+          title: "新品上架",
+          subtitle: "限量毛绒人气推荐",
+          image: this.getWebPImage(
+            require("@/assets/images/goods/soft（1）.png")
+          ),
+        },
+        {
+          id: 2,
+          title: "爆款专区",
+          subtitle: "全场满299减60",
+          image: this.getWebPImage(
+            require("@/assets/images/goods/soft (2).png")
+          ),
+        },
+        {
+          id: 3,
+          title: "限定系列",
+          subtitle: "迪士尼城堡联名款",
+          image: this.getWebPImage(
+            require("@/assets/images/goods/soft (3).png")
+          ),
+        },
+        {
+          id: 4,
+          title: "周边精选",
+          subtitle: "漫威英雄主题周",
+          image: this.getWebPImage(
             require("@/assets/images/goods/soft（4）.png")
           ),
         },

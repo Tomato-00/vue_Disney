@@ -129,6 +129,7 @@ body {
 }
 .shop-header .list {
     width: 100%;
+    display: none;
 }
 .list ul {
     display: flex;
@@ -210,6 +211,9 @@ body {
 @media screen and (max-width: 992px) {
     .shop-header .header-main {
         flex-wrap: wrap;
+    }
+    .shop-header .list {
+        display: flex;
     }
     .shop-header .search-bar {
         order: 2;
@@ -1230,6 +1234,50 @@ footer {
     border-radius: 16px;
 }
 
+.mobile-showcase {
+    display: none;
+    width: 100%;
+    gap: 16px;
+}
+
+.mobile-showcase-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mobile-showcase-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 28px rgba(0, 0, 0, 0.22);
+}
+
+.mobile-showcase-card img {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.mobile-showcase-info h5 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.mobile-showcase-info p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
 .slider-container {
     width: 100%;
     position: relative;
@@ -1328,7 +1376,8 @@ footer {
 .soft .left-grid {
     flex: 1 1 320px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
     gap: 20px;
     padding: 0;
 }
@@ -1781,7 +1830,15 @@ footer {
         flex-direction: column;
     }
     .slider {
-        min-height: 220px;
+        display: none;
+    }
+    .mobile-showcase {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+    .key {
+        display: none;
     }
     .display .products-wrapper {
         flex-direction: column;
@@ -1818,6 +1875,10 @@ footer {
 @media screen and (max-width: 576px) {
     .wrapper {
         padding: 0 12px;
+    }
+    .mobile-showcase {
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
     .top ul {
         flex-direction: column;
