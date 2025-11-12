@@ -1,39 +1,51 @@
 <template>
   <div class="app">
-    <header>
-      <div class="logo">
-        <h1>
-          <a href=""
-            ><img
-              :src="getWebPImage(require('@/assets/images/logo.jpg'))"
-              alt=""
-          /></a>
-        </h1>
+    <header class="shop-header">
+      <div class="header-main">
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Toggle navigation"
+          @click="toggleMobileMenu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="search-bar">
+          <input
+            v-model="searchKeyword"
+            type="text"
+            placeholder="搜索商品/品牌"
+            aria-label="搜索商品或品牌"
+            @keyup.enter="performSearch"
+          />
+          <button
+            class="search-trigger"
+            type="button"
+            aria-label="搜索"
+            @click="performSearch"
+          >
+            <span class="iconfont icon-sousuo"></span>
+          </button>
+        </div>
+        <div class="auth-actions">
+          <button class="auth-btn login" @click="openLogin">登录</button>
+          <button class="auth-btn register" @click="openRegister">注册</button>
+        </div>
       </div>
-      <button
-        class="menu-toggle"
-        type="button"
-        aria-label="Toggle navigation"
-        @click="toggleMobileMenu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
       <div class="list" :class="{ open: isMobileMenuOpen }">
         <ul>
-          <li v-for="item in navMenu" :key="item.name">
-            <router-link :to="item.path" @click.native="closeMobileMenu">
-              {{ item.name }}
-            </router-link>
+          <li v-for="category in categories" :key="category">
+            <button
+              type="button"
+              class="category-link"
+              @click="closeMobileMenu"
+            >
+              {{ category }}
+            </button>
           </li>
         </ul>
-      </div>
-      <div class="search">
-        <input type="text" placeholder="search" />
-        <a href=""><span class="iconfont icon-sousuo"></span></a>
-        <button @click="openRegister">注册</button>
-        <button @click="openLogin">登录</button>
       </div>
     </header>
     <div
@@ -262,12 +274,6 @@
     </div>
     <br /><br />
 
-    <!-- <footer align="center">
-        <p>&copy;2307黄恭祖</p>
-    <script src="./index.js"></script>
-    <script src="./HappyImage.min.js"></script>
-    <script src="./jquery.min.js"></script> -->
-
     <div class="side-nav">
       <ul>
         <li>
@@ -296,7 +302,17 @@
         </li>
       </ul>
     </div>
-    <!-- <script src="./js/index.js"></script> -->
+    <nav class="mobile-bottom-nav">
+      <router-link
+        v-for="item in bottomNav"
+        :key="item.name"
+        :to="item.path"
+        class="bottom-nav-item"
+      >
+        <span v-if="item.icon" :class="['iconfont', item.icon]"></span>
+        <span class="label">{{ item.name }}</span>
+      </router-link>
+    </nav>
   </div>
 </template>
 
@@ -309,12 +325,11 @@ export default {
   data() {
     return {
       isMobileMenuOpen: false,
-      // 导航菜单
-      navMenu: [
-        { name: "首页", path: "/" },
-        { name: "乐园资讯", path: "/news" },
-        { name: "相关影视", path: "/movies" },
-        { name: "周边商城", path: "/shop" },
+      searchKeyword: "",
+      bottomNav: [
+        { name: "首页", path: "/", icon: "icon-dishini" },
+        { name: "购物车", path: "/cart", icon: "icon-shopshoppingco" },
+        { name: "我的", path: "/profile", icon: "icon-shoucang" },
       ],
 
       // 分类菜单（顶部）
@@ -442,6 +457,14 @@ export default {
     },
     openRegister() {
       this.$store.dispatch("auth/open", "register");
+    },
+    performSearch() {
+      const keyword = this.searchKeyword.trim();
+      if (!keyword) {
+        return;
+      }
+      console.log("搜索:", keyword);
+      // TODO: 集成实际搜索逻辑
     },
     // 轮播图：下一张
     nextSlider() {
