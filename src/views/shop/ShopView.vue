@@ -69,11 +69,12 @@
           </div>
           <div class="IP">
             <ul>
-              <a href="" v-for="series in ipSeries" :key="series">
-                <li>
-                  {{ series }}<span class="iconfont icon-jiantou2"></span>
-                </li>
-              </a>
+              <li v-for="series in ipSeries" :key="series">
+                <a href="">
+                  <span class="series-name">{{ series }}</span>
+                  <span class="iconfont icon-jiantou2"></span>
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -175,6 +176,7 @@
       <div class="der">
         <div class="title">
           <h2>饰品</h2>
+          
           <a href="">more ></a>
         </div>
         <div class="display">
