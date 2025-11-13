@@ -103,7 +103,12 @@
           </div>
         </div>
         <div class="slider">
-          <div class="slider-container">
+          <div
+            class="slider-container"
+            @touchstart.passive="onSliderTouchStart"
+            @touchmove.passive="onSliderTouchMove"
+            @touchend.passive="onSliderTouchEnd"
+          >
             <img
               v-for="(img, index) in sliderImages"
               :key="index"
@@ -161,6 +166,9 @@
                 v-for="product in softToys"
                 :key="product.id"
                 class="product-card"
+                :class="{ 'is-pressed': pressedProductId === product.id }"
+                @touchstart.passive="onCardTouchStart(product.id)"
+                @touchend.passive="onCardTouchEnd"
               >
                 <div class="product-image">
                   <img :src="product.image" />
@@ -394,6 +402,12 @@ export default {
       sliderImages: [],
       currentSliderIndex: 0, // 当前轮播图索引
       autoPlayTimer: null, // 自动播放定时器
+      // 触摸状态（轮播）
+      touchStartX: 0,
+      touchStartY: 0,
+      sliderSwiping: false,
+      // 商品卡片按压反馈
+      pressedProductId: null,
 
       // 移动端陈列区
       mobileShowcase: [],
@@ -515,6 +529,42 @@ export default {
       this.currentSliderIndex =
         (this.currentSliderIndex - 1 + this.sliderImages.length) %
         this.sliderImages.length;
+    },
+    // 轮播图触摸：开始
+    onSliderTouchStart(e) {
+      if (!e.touches || e.touches.length === 0) return;
+      const t = e.touches[0];
+      this.touchStartX = t.clientX;
+      this.touchStartY = t.clientY;
+      this.sliderSwiping = true;
+    },
+    // 轮播图触摸：移动（阈值触发翻页）
+    onSliderTouchMove(e) {
+      if (!this.sliderSwiping || !e.touches || e.touches.length === 0) return;
+      const t = e.touches[0];
+      const dx = t.clientX - this.touchStartX;
+      const dy = t.clientY - this.touchStartY;
+      // 若纵向位移更大，交还滚动
+      if (Math.abs(dy) > Math.abs(dx)) return;
+      const threshold = 40;
+      if (dx > threshold) {
+        this.prevSlider();
+        this.sliderSwiping = false;
+      } else if (dx < -threshold) {
+        this.nextSlider();
+        this.sliderSwiping = false;
+      }
+    },
+    // 轮播图触摸：结束
+    onSliderTouchEnd() {
+      this.sliderSwiping = false;
+    },
+    // 商品卡片按压反馈
+    onCardTouchStart(id) {
+      this.pressedProductId = id;
+    },
+    onCardTouchEnd() {
+      this.pressedProductId = null;
     },
 
     // 轮播图：切换到指定索引
