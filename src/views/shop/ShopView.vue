@@ -35,33 +35,7 @@
             </ul>
           </div>
         </div>
-        <div class="slider">
-          <div
-            class="slider-container"
-            @touchstart.passive="onSliderTouchStart"
-            @touchmove.passive="onSliderTouchMove"
-            @touchend.passive="onSliderTouchEnd"
-          >
-            <img
-              v-for="(img, index) in sliderImages"
-              :key="index"
-              :src="img.src"
-              :class="{ active: index === currentSliderIndex }"
-              alt=""
-            />
-          </div>
-          <div class="slider-dots">
-            <div
-              v-for="(img, index) in sliderImages"
-              :key="index"
-              class="slider-dot"
-              :class="{ active: currentSliderIndex === index }"
-              @click="goToSlider(index)"
-            ></div>
-          </div>
-          <div class="slider-btn prev" @click="prevSlider">❮</div>
-          <div class="slider-btn next" @click="nextSlider">❯</div>
-        </div>
+        <GoodsSlider :images="sliderImages" />
         <div class="mobile-showcase">
           <div
             v-for="item in mobileShowcase"
@@ -298,12 +272,14 @@
 
 <script>
 import HeaderCom from "@/components/Header/HeaderCom.vue";
+import GoodsSlider from "@/components/GoodsSlider/GoodsSlider.vue";
 import webpMixin from "@/utils/webpMixin";
 
 export default {
   name: "ShopView",
   components: {
     HeaderCom,
+    GoodsSlider,
   },
   mixins: [webpMixin],
   data() {
@@ -336,12 +312,6 @@ export default {
 
       // 轮播图数据
       sliderImages: [],
-      currentSliderIndex: 0, // 当前轮播图索引
-      autoPlayTimer: null, // 自动播放定时器
-      // 触摸状态（轮播）
-      touchStartX: 0,
-      touchStartY: 0,
-      sliderSwiping: false,
       // 商品卡片按压反馈
       pressedProductId: null,
 
@@ -454,58 +424,12 @@ export default {
       console.log("搜索:", trimmedKeyword);
       // TODO: 集成实际搜索逻辑
     },
-    // 轮播图：下一张
-    nextSlider() {
-      this.currentSliderIndex =
-        (this.currentSliderIndex + 1) % this.sliderImages.length;
-    },
-
-    // 轮播图：上一张
-    prevSlider() {
-      this.currentSliderIndex =
-        (this.currentSliderIndex - 1 + this.sliderImages.length) %
-        this.sliderImages.length;
-    },
-    // 轮播图触摸：开始
-    onSliderTouchStart(e) {
-      if (!e.touches || e.touches.length === 0) return;
-      const t = e.touches[0];
-      this.touchStartX = t.clientX;
-      this.touchStartY = t.clientY;
-      this.sliderSwiping = true;
-    },
-    // 轮播图触摸：移动（阈值触发翻页）
-    onSliderTouchMove(e) {
-      if (!this.sliderSwiping || !e.touches || e.touches.length === 0) return;
-      const t = e.touches[0];
-      const dx = t.clientX - this.touchStartX;
-      const dy = t.clientY - this.touchStartY;
-      // 若纵向位移更大，交还滚动
-      if (Math.abs(dy) > Math.abs(dx)) return;
-      const threshold = 40;
-      if (dx > threshold) {
-        this.prevSlider();
-        this.sliderSwiping = false;
-      } else if (dx < -threshold) {
-        this.nextSlider();
-        this.sliderSwiping = false;
-      }
-    },
-    // 轮播图触摸：结束
-    onSliderTouchEnd() {
-      this.sliderSwiping = false;
-    },
     // 商品卡片按压反馈
     onCardTouchStart(id) {
       this.pressedProductId = id;
     },
     onCardTouchEnd() {
       this.pressedProductId = null;
-    },
-
-    // 轮播图：切换到指定索引
-    goToSlider(index) {
-      this.currentSliderIndex = index;
     },
 
     // 添加到购物车
@@ -659,17 +583,6 @@ export default {
   mounted() {
     // 初始化图片（使用 WebP 优化）
     this.initImages();
-
-    // 启动轮播图自动播放
-    this.autoPlayTimer = setInterval(() => {
-      this.nextSlider();
-    }, 2000);
-  },
-  beforeDestroy() {
-    // 清除定时器
-    if (this.autoPlayTimer) {
-      clearInterval(this.autoPlayTimer);
-    }
   },
 };
 </script>
