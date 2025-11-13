@@ -1,82 +1,15 @@
 <template>
   <div class="app">
-    <header class="shop-header">
-      <div class="header-main">
-        <button
-          class="menu-toggle"
-          :class="{ active: isMobileMenuOpen }"
-          type="button"
-          aria-label="Toggle navigation"
-          :aria-expanded="isMobileMenuOpen.toString()"
-          aria-controls="shop-categories"
-          @click="toggleMobileMenu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <router-link to="/" class="logo" aria-label="返回首页">
-          <img v-if="logoImage" :src="logoImage" alt="Disney 商城" />
-        </router-link>
-        <div class="search-bar">
-          <input
-            v-model="searchKeyword"
-            type="text"
-            placeholder="搜索商品/品牌"
-            aria-label="搜索商品或品牌"
-            @keyup.enter="performSearch"
-          />
-          <button
-            class="search-trigger"
-            type="button"
-            aria-label="搜索"
-            @click="performSearch"
-          >
-            <span class="iconfont icon-sousuo"></span>
-          </button>
-        </div>
-        <div class="auth-actions">
-          <button class="auth-btn login" @click="openLogin">登录</button>
-          <button class="auth-btn register" @click="openRegister">注册</button>
-        </div>
-      </div>
-      <div
-        id="shop-categories"
-        class="list"
-        :class="{ open: isMobileMenuOpen }"
-        role="navigation"
-        aria-label="商品分类"
-      >
-        <div class="drawer-header">
-          <button
-            type="button"
-            class="drawer-back"
-            aria-label="关闭分类菜单"
-            @click="closeMobileMenu"
-          >
-            <span class="drawer-back-icon" aria-hidden="true"></span>
-            <span class="drawer-back-text">返回</span>
-          </button>
-          <div class="drawer-title">全部分类</div>
-        </div>
-        <ul>
-          <li v-for="category in categories" :key="category">
-            <button
-              type="button"
-              class="category-link"
-              @click="closeMobileMenu"
-            >
-              {{ category }}
-            </button>
-          </li>
-        </ul>
-      </div>
-    </header>
-    <div
-      v-if="isMobileMenuOpen"
-      class="mobile-overlay"
-      @click="closeMobileMenu"
-    ></div>
+    <HeaderCom
+      ref="headerRef"
+      :logo-image="logoImage"
+      :keyword="searchKeyword"
+      :categories="categories"
+      @update:keyword="updateSearchKeyword"
+      @search="performSearch"
+      @open-login="openLogin"
+      @open-register="openRegister"
+    />
     <div class="wrapper">
       <div class="top">
         <ul>
@@ -364,14 +297,17 @@
 </template>
 
 <script>
+import HeaderCom from "@/components/Header/HeaderCom.vue";
 import webpMixin from "@/utils/webpMixin";
 
 export default {
   name: "ShopView",
+  components: {
+    HeaderCom,
+  },
   mixins: [webpMixin],
   data() {
     return {
-      isMobileMenuOpen: false,
       searchKeyword: "",
       logoImage: null,
       bottomNav: [
@@ -498,11 +434,8 @@ export default {
     };
   },
   methods: {
-    toggleMobileMenu() {
-      this.isMobileMenuOpen = !this.isMobileMenuOpen;
-    },
-    closeMobileMenu() {
-      this.isMobileMenuOpen = false;
+    updateSearchKeyword(value) {
+      this.searchKeyword = value;
     },
     openLogin() {
       this.$store.dispatch("auth/open", "login");
@@ -510,12 +443,15 @@ export default {
     openRegister() {
       this.$store.dispatch("auth/open", "register");
     },
-    performSearch() {
-      const keyword = this.searchKeyword.trim();
-      if (!keyword) {
+    performSearch(keyword) {
+      const rawValue =
+        typeof keyword === "string" ? keyword : this.searchKeyword;
+      const trimmedKeyword = rawValue ? rawValue.trim() : "";
+      if (!trimmedKeyword) {
         return;
       }
-      console.log("搜索:", keyword);
+      this.searchKeyword = trimmedKeyword;
+      console.log("搜索:", trimmedKeyword);
       // TODO: 集成实际搜索逻辑
     },
     // 轮播图：下一张
@@ -715,7 +651,9 @@ export default {
   },
   watch: {
     $route() {
-      this.isMobileMenuOpen = false;
+      if (this.$refs.headerRef && this.$refs.headerRef.closeMenu) {
+        this.$refs.headerRef.closeMenu();
+      }
     },
   },
   mounted() {
