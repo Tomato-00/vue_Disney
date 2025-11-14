@@ -95,17 +95,28 @@
               <span class="drawer-back-icon" aria-hidden="true"></span>
               <span class="drawer-back-text">返回</span>
             </button>
-            <div class="drawer-title">全部分类</div>
+            <div class="drawer-title">导航菜单</div>
           </div>
           <ul>
-            <li v-for="category in categories" :key="category">
-              <button
-                type="button"
+            <li v-for="item in navItems" :key="item.label">
+              <router-link
+                v-if="item.to"
+                :to="item.to"
                 class="category-link"
-                @click="handleCategoryClick(category)"
+                @click="closeMobileMenu"
               >
-                {{ category }}
-              </button>
+                {{ item.label }}
+              </router-link>
+              <a
+                v-else
+                :href="item.href"
+                :target="item.target"
+                :rel="item.rel"
+                class="category-link"
+                @click="closeMobileMenu"
+              >
+                {{ item.label }}
+              </a>
             </li>
           </ul>
         </div>
@@ -610,12 +621,12 @@ export default {
 @media screen and (max-width: 768px) {
   .shop-header {
     padding: 12px 0 16px;
-    gap: 12px;
+    gap: 8px;
   }
 
   .header-container {
-    padding: 0 16px;
-    gap: 12px;
+    padding: 0 8px;
+    gap: 8px;
   }
 
   .primary-nav {
@@ -626,6 +637,7 @@ export default {
     align-items: center;
     flex-wrap: nowrap;
     width: 100%;
+    overflow: hidden;
   }
 
   .menu-toggle {
@@ -634,6 +646,7 @@ export default {
     width: auto;
     height: auto;
     padding: 6px;
+    flex-shrink: 0;
   }
 
   .shop-header .logo {
@@ -643,23 +656,32 @@ export default {
   .shop-header .search-bar {
     order: 2;
     flex: 1;
-    padding: 8px 18px;
+    padding: 6px 12px;
     background: rgba(255, 255, 255, 0.18);
-    margin: 0 8px;
+    margin: 0 4px;
+    min-width: 0;
+    max-width: calc(100% - 180px);
   }
 
   .auth-actions {
     order: 3;
-    width: auto;
+    width: auto !important;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
+    justify-content: flex-start !important;
+    gap: 4px;
+    flex-shrink: 0;
+    margin-right: 0;
+    margin-left: -8px;
+    padding-left: 0;
   }
 
   .auth-actions .auth-btn {
     flex: 0 0 auto;
     white-space: nowrap;
+    padding: 4px 8px;
+    font-size: 11px;
+    min-width: auto;
   }
 
   .auth-actions .auth-btn.register {

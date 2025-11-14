@@ -31,7 +31,6 @@
       <div class="news">
         <div class="title">
           <h2>新闻速览</h2>
-          <a href="">more &gt;</a>
         </div>
         <div class="hua">
           <div class="left">
@@ -70,7 +69,6 @@
       <div class="focus">
         <div class="title">
           <h2>Disney聚焦</h2>
-          <a href="">more &gt;</a>
         </div>
         <div class="content">
           <div class="left">
@@ -92,7 +90,6 @@
       <div class="subscribe">
         <div class="title">
           <h2>相关订阅</h2>
-          <a href="">more &gt;</a>
         </div>
         <div class="what">
           <ul>
@@ -206,13 +203,17 @@ export default {
 
 .wrapper {
     margin: 0 auto;
-    width: 1300px;
+    width: 100%;
+    max-width: 1300px;
+    padding: 0 20px;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 /* 主要内容区域优化 */
 .main {
     position: relative;
+    min-height: 320px;
     height: 320px;
     border: none;
     margin-top: 15px;
@@ -220,6 +221,9 @@ export default {
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
 }
 
 /* 轮播图区域样式 */
@@ -229,6 +233,7 @@ export default {
     position: relative;
     overflow: hidden;
     border-radius: 15px 0 0 15px;
+    flex-shrink: 0;
 }
 
 .slider-container {
@@ -403,17 +408,21 @@ export default {
 .news .hua {
     margin-top: 20px;
     display: flex;
+    flex-wrap: wrap;
     gap: 30px;
 }
 
 /* 新闻区域右侧轮播图样式 */
 .news .right {
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     height: 300px;
     overflow: hidden;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     position: relative;
+    flex: 1;
+    min-width: 300px;
 }
 
 .news-slider {
@@ -428,7 +437,8 @@ export default {
 }
 
 .news-slider-container img {
-    min-width: 500px;
+    min-width: 100%;
+    width: 100%;
     height: 300px;
     object-fit: cover;
 }
@@ -473,11 +483,17 @@ export default {
 }
 .subscribe .what ul {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }
 .subscribe .what ul li {
-    height: 450px;
-    width: 300px;
+    height: auto;
+    min-height: 450px;
+    width: 100%;
+    max-width: 300px;
+    flex: 1;
+    min-width: 280px;
     border-radius: 20px;
     transition: all 0.4s ease;
     padding-bottom: 20px;
@@ -511,8 +527,10 @@ export default {
     transform: scale(1.05);
 }
 .neirong {
-    height: 350px;
-    width: 300px;
+    height: auto;
+    min-height: 350px;
+    max-height: 350px;
+    width: 100%;
     padding: 25px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(221, 160, 221, 0.2);
@@ -521,6 +539,7 @@ export default {
     transition: all 0.3s ease;
     backdrop-filter: blur(5px);
     overflow-y: auto;
+    box-sizing: border-box;
 }
 .subscribe .what ul li:hover .neirong {
     background: rgba(255, 255, 255, 0.1);
@@ -614,6 +633,285 @@ footer {
     line-height: 1.6;
     font-size: 15px;
     text-align: justify;
+}
+
+/* 响应式设计 - 中等屏幕 (1024px - 1400px) */
+@media screen and (max-width: 1400px) and (min-width: 1025px) {
+    .wrapper {
+        max-width: 95%;
+        padding: 0 20px;
+    }
+
+    .slider {
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .main .txt {
+        width: 100%;
+        max-width: 450px;
+        right: 30px;
+    }
+
+    .txt p {
+        font-size: 30px;
+    }
+}
+
+/* 响应式设计 - 平板设备 (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+    .wrapper {
+        padding: 0 15px;
+    }
+
+    .main {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        min-height: auto;
+    }
+
+    .slider {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 15px;
+        margin-bottom: 20px;
+    }
+
+    .main .txt {
+        position: relative;
+        margin: 20px auto;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 200px;
+        top: auto;
+        right: auto;
+    }
+
+    .txt p {
+        font-size: 28px;
+        line-height: 1.5;
+        padding: 30px 15px;
+    }
+
+    .title h2 {
+        font-size: 28px;
+    }
+
+    .news .hua {
+        flex-direction: column;
+    }
+
+    .news .right {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .subscribe .what ul {
+        justify-content: center;
+    }
+
+    .subscribe .what ul li {
+        max-width: 48%;
+        min-width: 280px;
+    }
+
+    .focus .content {
+        flex-direction: column;
+    }
+
+    .focus .content img {
+        height: 250px;
+    }
+}
+
+/* 响应式设计 - 移动设备 (< 768px) */
+@media screen and (max-width: 768px) {
+    .wrapper {
+        padding: 0 10px;
+    }
+
+    .main {
+        margin-top: 10px;
+    }
+
+    .slider {
+        height: 250px;
+    }
+
+    .slider-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+
+    .slider-dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .main .txt {
+        display: none;
+    }
+
+    .title {
+        height: auto;
+        padding: 15px;
+        margin-top: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .title h2 {
+        font-size: 24px;
+    }
+
+    .title a {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+    .news .hua {
+        gap: 20px;
+    }
+
+    .news .right {
+        height: 250px;
+    }
+
+    .news-slider-container img {
+        height: 250px;
+    }
+
+    .hua .left .cap {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .subscribe .what {
+        margin-top: 30px;
+    }
+
+    .subscribe .what ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .subscribe .what ul li {
+        width: 100%;
+        max-width: 100%;
+        min-width: auto;
+    }
+
+    .neirong {
+        width: 100%;
+        max-height: 400px;
+    }
+
+    .biaoti h3 {
+        font-size: 18px;
+    }
+
+    .neirong p {
+        font-size: 13px;
+    }
+
+    .focus .content {
+        gap: 20px;
+    }
+
+    .focus .content > div {
+        padding: 15px;
+    }
+
+    .focus .content img {
+        height: 200px;
+    }
+
+    .focus .content strong {
+        font-size: 18px;
+        margin: 10px 0;
+    }
+
+    .focus .content p {
+        font-size: 14px;
+    }
+}
+
+/* 响应式设计 - 小屏移动设备 (< 480px) */
+@media screen and (max-width: 480px) {
+    .wrapper {
+        padding: 0 8px;
+    }
+
+    .slider {
+        height: 200px;
+    }
+
+    .slider-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+
+    .slider-dot {
+        width: 6px;
+        height: 6px;
+        gap: 8px;
+    }
+
+    .main .txt {
+        display: none;
+    }
+
+    .title h2 {
+        font-size: 20px;
+    }
+
+    .news .right {
+        height: 200px;
+    }
+
+    .news-slider-container img {
+        height: 200px;
+    }
+
+    .hua .left .cap {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+
+    .subscribe .what ul li {
+        min-height: 400px;
+    }
+
+    .neirong {
+        padding: 20px;
+        min-height: 300px;
+        max-height: 350px;
+    }
+
+    .biaoti h3 {
+        font-size: 16px;
+    }
+
+    .neirong p {
+        font-size: 12px;
+    }
+
+    .focus .content img {
+        height: 180px;
+    }
+
+    .focus .content strong {
+        font-size: 16px;
+    }
+
+    .focus .content p {
+        font-size: 13px;
+    }
 }
 
 </style>
