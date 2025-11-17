@@ -1341,7 +1341,7 @@ footer {
 }
 
 /* 轮播图样式优化 */
-.slider {
+.show .slider {
     flex: 2 1 420px;
     position: relative;
     overflow: hidden;
@@ -1394,13 +1394,13 @@ footer {
     color: rgba(255, 255, 255, 0.75);
 }
 
-.slider-container {
+.show .slider-container {
     width: 100%;
     position: relative;
     padding-top: 56.25%;
 }
 
-.slider-container img {
+.show .slider-container img {
     position: absolute;
     top: 0;
     left: 0;
@@ -1412,12 +1412,12 @@ footer {
     object-position: center;
 }
 
-.slider-container img.active {
+.show .slider-container img.active {
     opacity: 1;
 }
 
 /* 添加轮播图控制按钮 */
-.slider-dots {
+.show .slider-dots {
     position: absolute;
     bottom: 20px;
     left: 50%;
@@ -1426,7 +1426,7 @@ footer {
     gap: 10px;
 }
 
-.slider-dot {
+.show .slider-dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
@@ -1435,13 +1435,13 @@ footer {
     transition: all 0.3s ease;
 }
 
-.slider-dot.active {
+.show .slider-dot.active {
     background: #fff;
     transform: scale(1.2);
 }
 
 /* 添加前后按钮 */
-.slider-btn {
+.show .slider-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -1459,15 +1459,15 @@ footer {
     z-index: 10;
 }
 
-.slider-btn:hover {
+.show .slider-btn:hover {
     background: rgba(0, 0, 0, 0.5);
 }
 
-.slider-btn.prev {
+.show .slider-btn.prev {
     left: 20px;
 }
 
-.slider-btn.next {
+.show .slider-btn.next {
     right: 20px;
 }
 
@@ -1784,7 +1784,7 @@ footer {
 }
 
 /* 轮播容器触摸优化，允许横向滑动，保留纵向滚动 */
-.slider .slider-container {
+.show .slider .slider-container {
     touch-action: pan-y;
     -webkit-user-select: none;
     user-select: none;
@@ -1959,7 +1959,7 @@ footer {
     .show {
         flex-direction: column;
     }
-    .slider {
+    .show .slider {
         display: none;
     }
     .mobile-showcase {

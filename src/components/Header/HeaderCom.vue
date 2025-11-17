@@ -673,7 +673,7 @@ export default {
     flex: 1;
     padding: 6px 12px;
     background: rgba(255, 255, 255, 0.18);
-    margin: 0 4px;
+    margin: 10px 4px;
     min-width: 0;
     max-width: calc(100% - 180px);
   }
@@ -686,8 +686,7 @@ export default {
     justify-content: flex-start !important;
     gap: 4px;
     flex-shrink: 0;
-    margin-right: 0;
-    margin-left: -8px;
+    margin-left: 20px;
     padding-left: 0;
   }
 

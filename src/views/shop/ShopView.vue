@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    
     <HeaderCom
       ref="headerRef"
       :logo-image="logoImage"
@@ -10,6 +11,7 @@
       @open-login="openLogin"
       @open-register="openRegister"
     />
+
     <div class="wrapper">
       <div class="top">
         <ul>

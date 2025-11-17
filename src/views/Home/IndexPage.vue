@@ -182,21 +182,13 @@ export default {
   },
   methods: {
     openLogin() {
-      if (typeof window === "undefined") return;
-      const newWindow = window.open("./登录.html", "_blank");
-      if (newWindow) {
-        newWindow.opener = null;
-      }
+      this.$store.dispatch("auth/open", "login");
     },
     openRegister() {
-      if (typeof window === "undefined") return;
-      const newWindow = window.open("./注册.html", "_blank");
-      if (newWindow) {
-        newWindow.opener = null;
-      }
+      this.$store.dispatch("auth/open", "register");
     },
   },
-};
+}
 </script>
 
 <style scoped>
@@ -233,11 +225,26 @@ export default {
 /* 轮播图区域样式（PC 端占满 main 区域宽度） */
 .slider-wrapper {
     width: 100%;
+    max-width: 100%;
     height: 320px;
     position: relative;
     overflow: hidden;
-    border-radius: 15px 0 0 15px;
-    flex-shrink: 0;
+    border-radius: 15px;
+    flex: 1 1 100%;
+    display: flex;
+}
+
+:deep(.home-slider.slider) {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    min-height: 100%;
+    min-width: 0;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    flex: 1 1 auto;
+    display: block;
 }
 
 :deep(.home-slider) {
@@ -251,7 +258,9 @@ export default {
 :deep(.home-slider .slider-container) {
     width: 100%;
     height: 100%;
+    min-height: 100%;
     position: relative;
+    padding-top: 0;
 }
 
 :deep(.home-slider .slider-container img) {
