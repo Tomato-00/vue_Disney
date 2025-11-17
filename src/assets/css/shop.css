@@ -605,6 +605,7 @@ body {
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
     min-height: 320px;
+    margin-left: 13px;
 }
 
 .subnav .title {
@@ -787,7 +788,6 @@ body {
 .display {
     margin-top: 15px;
     width: 100%;
-    background-color: #fff;
     margin-bottom: 15px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);

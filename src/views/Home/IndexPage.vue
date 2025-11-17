@@ -7,7 +7,7 @@
       @open-register="openRegister"
     />
     <div class="wrapper">
-      <div class="main">
+      <div v-if="!isMobile" class="main">
         <div class="slider-wrapper">
           <GoodsSlider
             class="home-slider"
@@ -19,6 +19,17 @@
             :show-controls="true"
           />
         </div>
+      </div>
+      <div v-else class="mobile-slider">
+        <GoodsSlider
+          class="home-slider"
+          :images="homeSliderImages"
+          :autoplay="true"
+          :interval="4000"
+          :loop="true"
+          :show-dots="true"
+          :show-controls="false"
+        />
       </div>
       <div class="news">
         <div class="title">
@@ -178,7 +189,15 @@ export default {
         { label: "相关影视", href: "./相关影视.html" },
         { label: "周边商城", to: "/shop" },
       ],
+      isMobile: false,
     };
+  },
+  mounted() {
+    this.handleResize();
+    window.addEventListener("resize", this.handleResize);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleResize);
   },
   methods: {
     openLogin() {
@@ -186,6 +205,9 @@ export default {
     },
     openRegister() {
       this.$store.dispatch("auth/open", "register");
+    },
+    handleResize() {
+      this.isMobile = window.innerWidth <= 768;
     },
   },
 }
@@ -209,8 +231,8 @@ export default {
 /* 主要内容区域优化 */
 .main {
     position: relative;
-    min-height: 320px;
-    height: 320px;
+    min-height: 420px;
+    height: 420px;
     border: none;
     margin-top: 15px;
     background: rgba(0, 0, 0, 0.2);
@@ -222,11 +244,27 @@ export default {
     align-items: flex-start;
 }
 
+.mobile-slider {
+    margin-top: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-slider :deep(.home-slider) {
+    height: 240px;
+}
+
+.mobile-slider :deep(.home-slider .slider-btn) {
+    display: none;
+}
+
 /* 轮播图区域样式（PC 端占满 main 区域宽度） */
 .slider-wrapper {
     width: 100%;
     max-width: 100%;
-    height: 320px;
+    height: 420px;
     position: relative;
     overflow: hidden;
     border-radius: 15px;
@@ -267,6 +305,8 @@ export default {
     width: 100%;
     height: 100%;
     position: absolute;
+    top: 0;
+    left: 0;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     object-fit: cover;
@@ -700,6 +740,10 @@ footer {
         margin-top: 10px;
     }
 
+    .mobile-slider :deep(.home-slider) {
+        height: 220px;
+    }
+
     /* 移动端：轮播高度稍微降低，按钮、指示点缩小 */
     .slider-wrapper {
         width: 100%;
@@ -823,6 +867,9 @@ footer {
 
     :deep(.home-slider) {
         height: 200px;
+    }
+    .mobile-slider :deep(.home-slider) {
+        height: 190px;
     }
 
     :deep(.home-slider .slider-btn) {
