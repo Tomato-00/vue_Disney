@@ -8,24 +8,16 @@
     />
     <div class="wrapper">
       <div class="main">
-        <div class="slider">
-          <div class="slider-container">
-            <img src="@/assets/images/home/1.jpg" alt="Disney carousel 1" class="active" />
-            <img src="@/assets/images/home/2.jpg" alt="Disney carousel 2" />
-            <img src="@/assets/images/home/3.jpg" alt="Disney carousel 3" />
-            <img src="@/assets/images/home/4.jpg" alt="Disney carousel 4" />
-          </div>
-          <div class="slider-dots">
-            <div class="slider-dot active"></div>
-            <div class="slider-dot"></div>
-            <div class="slider-dot"></div>
-            <div class="slider-dot"></div>
-          </div>
-          <div class="slider-btn prev">❮</div>
-          <div class="slider-btn next">❯</div>
-        </div>
-        <div class="txt">
-          <p>点击顶部导航跳转可了解更多~</p>
+        <div class="slider-wrapper">
+          <GoodsSlider
+            class="home-slider"
+            :images="homeSliderImages"
+            :autoplay="true"
+            :interval="4000"
+            :loop="true"
+            :show-dots="true"
+            :show-controls="true"
+          />
         </div>
       </div>
       <div class="news">
@@ -158,16 +150,28 @@
 
 <script>
 import HeaderCom from "@/components/Header/HeaderCom.vue";
+import GoodsSlider from "@/components/GoodsSlider/GoodsSlider.vue";
 import headerLogo from "@/assets/images/logo.jpg";
+import slide1 from "@/assets/images/home/1.jpg";
+import slide2 from "@/assets/images/home/2.jpg";
+import slide3 from "@/assets/images/home/3.jpg";
+import slide4 from "@/assets/images/home/4.jpg";
 
 export default {
   name: "IndexPage",
   components: {
     HeaderCom,
+    GoodsSlider,
   },
   data() {
     return {
       logoImage: headerLogo,
+      homeSliderImages: [
+        { src: slide1, alt: "Disney carousel 1", key: "home-slide-1" },
+        { src: slide2, alt: "Disney carousel 2", key: "home-slide-2" },
+        { src: slide3, alt: "Disney carousel 3", key: "home-slide-3" },
+        { src: slide4, alt: "Disney carousel 4", key: "home-slide-4" },
+      ],
       navItems: [
         { label: "首页", to: "/" },
         { label: "乐园资讯", href: "./乐园资讯.html" },
@@ -226,9 +230,9 @@ export default {
     align-items: flex-start;
 }
 
-/* 轮播图区域样式 */
-.slider {
-    width: 700px;
+/* 轮播图区域样式（PC 端占满 main 区域宽度） */
+.slider-wrapper {
+    width: 100%;
     height: 320px;
     position: relative;
     overflow: hidden;
@@ -236,13 +240,21 @@ export default {
     flex-shrink: 0;
 }
 
-.slider-container {
+:deep(.home-slider) {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+:deep(.home-slider .slider-container) {
     width: 100%;
     height: 100%;
     position: relative;
 }
 
-.slider-container img {
+:deep(.home-slider .slider-container img) {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -251,12 +263,12 @@ export default {
     object-fit: cover;
 }
 
-.slider-container img.active {
+:deep(.home-slider .slider-container img.active) {
     opacity: 1;
 }
 
 /* 轮播图指示点 */
-.slider-dots {
+:deep(.home-slider .slider-dots) {
     position: absolute;
     bottom: 20px;
     left: 50%;
@@ -265,7 +277,7 @@ export default {
     gap: 10px;
 }
 
-.slider-dot {
+:deep(.home-slider .slider-dot) {
     width: 10px;
     height: 10px;
     border-radius: 50%;
@@ -274,13 +286,13 @@ export default {
     transition: all 0.3s ease;
 }
 
-.slider-dot.active {
+:deep(.home-slider .slider-dot.active) {
     background: #fff;
     transform: scale(1.2);
 }
 
 /* 轮播图按钮 */
-.slider-btn {
+:deep(.home-slider .slider-btn) {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -298,81 +310,23 @@ export default {
     opacity: 0;
 }
 
-.slider:hover .slider-btn {
+:deep(.home-slider:hover .slider-btn) {
     opacity: 1;
 }
 
-.slider-btn:hover {
+:deep(.home-slider .slider-btn:hover) {
     background: rgba(0, 0, 0, 0.8);
 }
 
-.prev {
+:deep(.home-slider .prev) {
     left: 20px;
 }
 
-.next {
+:deep(.home-slider .next) {
     right: 20px;
 }
 
-/* 文本区域优化 */
-.main .txt {
-    height: 280px;
-    width: 520px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(221, 160, 221, 0.8), rgba(59, 45, 72, 0.8));
-    backdrop-filter: blur(8px);
-    position: absolute;
-    top: 20px;
-    right: 50px;
-    color: #fff;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    transition: all 0.5s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    overflow: hidden;
-}
 
-.main .txt::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
-    transition: 0.5s;
-}
-
-.txt p {
-    font-family: "华文行楷";
-    font-size: 34px;
-    text-align: center;
-    line-height: 280px;
-    transition: all 0.5s ease;
-    position: relative;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.txt:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(135deg, rgba(221, 160, 221, 0.9), rgba(59, 45, 72, 0.9));
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.txt:hover::before {
-    left: 100%;
-}
-
-.txt:hover p {
-    transform: scale(1.05);
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-    color: #fff;
-}
 
 /* 标题区域优化 */
 .title {
@@ -642,11 +596,6 @@ footer {
         padding: 0 20px;
     }
 
-    .slider {
-        width: 100%;
-        max-width: 600px;
-    }
-
     .main .txt {
         width: 100%;
         max-width: 450px;
@@ -671,11 +620,17 @@ footer {
         min-height: auto;
     }
 
-    .slider {
+    /* 平板：轮播图改为整块自适应宽度 */
+    .slider-wrapper {
         width: 100%;
-        max-width: 100%;
+        height: auto;
         border-radius: 15px;
         margin-bottom: 20px;
+    }
+
+    :deep(.home-slider) {
+        height: 280px;
+        border-radius: 15px;
     }
 
     .main .txt {
@@ -736,17 +691,23 @@ footer {
         margin-top: 10px;
     }
 
-    .slider {
-        height: 250px;
+    /* 移动端：轮播高度稍微降低，按钮、指示点缩小 */
+    .slider-wrapper {
+        width: 100%;
+        height: auto;
     }
 
-    .slider-btn {
+    :deep(.home-slider) {
+        height: 240px;
+    }
+
+    :deep(.home-slider .slider-btn) {
         width: 35px;
         height: 35px;
         font-size: 18px;
     }
 
-    .slider-dot {
+    :deep(.home-slider .slider-dots .slider-dot) {
         width: 8px;
         height: 8px;
     }
@@ -846,20 +807,25 @@ footer {
         padding: 0 8px;
     }
 
-    .slider {
+    .slider-wrapper {
+        width: 100%;
+        height: auto;
+    }
+
+    :deep(.home-slider) {
         height: 200px;
     }
 
-    .slider-btn {
+    :deep(.home-slider .slider-btn) {
         width: 30px;
         height: 30px;
         font-size: 16px;
     }
 
-    .slider-dot {
+    :deep(.home-slider .slider-dots .slider-dot) {
         width: 6px;
         height: 6px;
-        gap: 8px;
+        margin: 0 4px;
     }
 
     .main .txt {

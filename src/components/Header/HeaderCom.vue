@@ -262,6 +262,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  /* background-color: yellow; */
 }
 
 .shop-header .header-main {
@@ -313,15 +314,29 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding-right: 12px;
   text-decoration: none;
   line-height: 0;
+  margin-top: 10px;
+  margin-left: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 6px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.shop-header .logo:hover {
+  border-color: rgba(0, 255, 255, 0.8);
+  background: rgba(0, 255, 255, 0.08);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.4);
+  transform: translateY(-2px);
 }
 
 .shop-header .logo img {
   display: block;
   height: 56px;
   width: auto;
+  border-radius: 999px;
 }
 
 .primary-nav {
