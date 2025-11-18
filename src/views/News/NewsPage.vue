@@ -25,9 +25,15 @@
           <a href="#">more ></a>
         </div>
         <div class="banner-top">
-          <div class="banner-image main">主视觉占位</div>
-          <div class="banner-image left">左侧图占位</div>
-          <div class="banner-image right">右侧图占位</div>
+          <div class="banner-image main">
+            <img :src="bannerImages.main" alt="乐园资讯主视觉" />
+          </div>
+          <div class="banner-image left">
+            <img :src="bannerImages.left" alt="乐园资讯左侧图" />
+          </div>
+          <div class="banner-image right">
+            <img :src="bannerImages.right" alt="乐园资讯右侧图" />
+          </div>
         </div>
       </section>
 
@@ -42,7 +48,19 @@
             :key="media.id"
             class="media-placeholder"
           >
-            {{ media.label }}
+            <video
+              v-if="media.type === 'video'"
+              :src="media.src"
+              controls
+              playsinline
+              preload="metadata"
+            ></video>
+            <div v-else class="media-fallback">
+              {{ media.label }}
+            </div>
+            <p v-if="media.caption" class="media-caption">
+              {{ media.caption }}
+            </p>
           </div>
           <div class="text-card">
             <p v-for="(paragraph, index) in shanghaiSummary" :key="index">
@@ -63,7 +81,19 @@
             :key="media.id"
             class="media-placeholder"
           >
-            {{ media.label }}
+            <video
+              v-if="media.type === 'video'"
+              :src="media.src"
+              controls
+              playsinline
+              preload="metadata"
+            ></video>
+            <div v-else class="media-fallback">
+              {{ media.label }}
+            </div>
+            <p v-if="media.caption" class="media-caption">
+              {{ media.caption }}
+            </p>
           </div>
         </div>
         <div class="text-card wide">
@@ -108,10 +138,6 @@
           </form>
         </div>
       </section>
-
-      <footer>
-        <p>© 2025 Disney News Portal · 内容持续更新中</p>
-      </footer>
     </div>
   </div>
 </template>
@@ -119,6 +145,12 @@
 <script>
 import HeaderCom from "@/components/Header/HeaderCom.vue";
 import headerLogo from "@/assets/images/logo.jpg";
+import bannerMainImage from "@/assets/images/news/乐园2.jpg";
+import bannerRightImage from "@/assets/images/news/乐园3.jpg";
+import shanghaiVideoOne from "@/assets/video/上海1.mp4";
+import shanghaiVideoTwo from "@/assets/video/上海2.mp4";
+import hongKongVideoOne from "@/assets/video/Hongkong1.mp4";
+import hongKongVideoTwo from "@/assets/video/HongKong2.mp4";
 
 export default {
   name: "NewsPage",
@@ -139,9 +171,24 @@ export default {
         { label: "香港", href: "#hongkong" },
         { label: "互动", href: "#social" },
       ],
+      bannerImages: {
+        main: bannerMainImage,
+        left: bannerMainImage,
+        right: bannerRightImage,
+      },
       shanghaiMedia: [
-        { id: "sh-video-1", label: "上海视频占位 1" },
-        { id: "sh-video-2", label: "上海视频占位 2" },
+        {
+          id: "sh-video-1",
+          type: "video",
+          src: shanghaiVideoOne,
+          caption: "创极速光轮全新视角体验",
+        },
+        {
+          id: "sh-video-2",
+          type: "video",
+          src: shanghaiVideoTwo,
+          caption: "奇幻花车巡游高燃集锦",
+        },
       ],
       shanghaiSummary: [
         "拥有八大主题园区：米奇大街、奇想花园、梦幻世界、探险岛、宝藏湾、明日世界、玩具总动员以及疯狂动物城。",
@@ -149,8 +196,18 @@ export default {
         "2024 年 8 月推出的全新蜘蛛侠主题项目，成为新一波打卡热点，等你来体验。",
       ],
       hongKongMedia: [
-        { id: "hk-video-1", label: "香港视频占位 1" },
-        { id: "hk-video-2", label: "香港视频占位 2" },
+        {
+          id: "hk-video-1",
+          type: "video",
+          src: hongKongVideoOne,
+          caption: "魔海奇缘凯旋庆典沉浸现场",
+        },
+        {
+          id: "hk-video-2",
+          type: "video",
+          src: hongKongVideoTwo,
+          caption: "蚁侠与黄蜂女击战特攻实录",
+        },
       ],
       hongKongSummary: [
         "魔海奇缘凯旋庆典：莫阿娜登场，游客可跟随音乐互动，沉浸式体验太平洋文化。",
@@ -278,14 +335,8 @@ export default {
   height: 340px;
   width: 650px;
   border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px dashed rgba(255, 255, 255, 0.3);
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .banner-image.main {
@@ -301,6 +352,13 @@ export default {
 
 .banner-image.right {
   right: 0;
+}
+
+.banner-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .banner-top:hover .left {
@@ -333,10 +391,29 @@ export default {
   background: linear-gradient(45deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
   border: 1px dashed rgba(255, 255, 255, 0.2);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  padding: 16px;
+  gap: 12px;
   text-align: center;
+}
+
+.media-placeholder video {
+  width: 100%;
+  height: 220px;
+  border-radius: 16px;
+  object-fit: cover;
+  background: #000;
+}
+
+.media-caption {
+  font-size: 16px;
+  color: #fff;
+}
+
+.media-fallback {
+  font-size: 18px;
 }
 
 .text-card {
