@@ -185,7 +185,7 @@ export default {
       ],
       navItems: [
         { label: "首页", to: "/" },
-        { label: "乐园资讯", href: "./乐园资讯.html" },
+        { label: "乐园资讯", to: "/news" },
         { label: "相关影视", href: "./相关影视.html" },
         { label: "周边商城", to: "/shop" },
       ],
