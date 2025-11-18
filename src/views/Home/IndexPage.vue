@@ -449,6 +449,7 @@ export default {
 /* 左侧新闻样式优化 */
 .hua .left {
     flex: 1;
+    margin-right: 40px;
 }
 
 .hua .left .cap {
@@ -489,6 +490,7 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+    margin-right: 40px;
 }
 .subscribe .what ul li {
     height: auto;
