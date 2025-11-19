@@ -145,7 +145,7 @@ export default {
       default: () => [
         { label: "首页", to: "/" },
         { label: "乐园资讯", to: "/news" },
-        { label: "影视剧集", href: "./相关影视.html" },
+        { label: "相关影视", to: "/tv" },
         { label: "周边商城", to: "/shop" },
       ],
     },

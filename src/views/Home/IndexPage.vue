@@ -186,7 +186,7 @@ export default {
       navItems: [
         { label: "首页", to: "/" },
         { label: "乐园资讯", to: "/news" },
-        { label: "相关影视", href: "./相关影视.html" },
+        { label: "相关影视", to: "/tv" },
         { label: "周边商城", to: "/shop" },
       ],
       isMobile: false,
@@ -735,7 +735,10 @@ footer {
 /* 响应式设计 - 移动设备 (< 768px) */
 @media screen and (max-width: 768px) {
     .wrapper {
-        padding: 0 10px;
+        margin: 0;
+        max-width: 100%;
+        width: 100vw;
+        padding: 0;
     }
 
     .main {
@@ -859,7 +862,10 @@ footer {
 /* 响应式设计 - 小屏移动设备 (< 480px) */
 @media screen and (max-width: 480px) {
     .wrapper {
-        padding: 0 8px;
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        max-width: 100%;
     }
 
     .slider-wrapper {
