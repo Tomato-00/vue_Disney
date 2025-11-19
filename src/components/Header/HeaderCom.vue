@@ -122,6 +122,7 @@
         </div>
       </div>
     </header>
+    <div class="header-spacer"></div>
 
     <div
       v-if="isMobileMenuOpen"
@@ -217,6 +218,13 @@ export default {
 
 .header-wrapper {
   position: relative;
+  width: 100%;
+  --header-height: 148px;
+}
+
+.header-spacer {
+  height: var(--header-height);
+  pointer-events: none;
 }
 
 .shop-header {
@@ -227,9 +235,12 @@ export default {
   padding: 18px 0 20px;
   gap: 18px;
   box-shadow: 0 14px 32px -18px rgba(10, 5, 20, 0.8), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1000;
+  left: 0;
+  right: 0;
+  z-index: 1100;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -337,6 +348,24 @@ export default {
   height: 56px;
   width: auto;
   border-radius: 999px;
+}
+
+@media screen and (max-width: 1200px) {
+  .header-wrapper {
+    --header-height: 168px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .header-wrapper {
+    --header-height: 210px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header-wrapper {
+    --header-height: 120px;
+  }
 }
 
 .primary-nav {

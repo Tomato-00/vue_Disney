@@ -9,15 +9,6 @@
     />
 
     <div class="news-wrapper">
-      <nav class="side-nav">
-        <a
-          v-for="anchor in quickAnchors"
-          :key="anchor.href"
-          :href="anchor.href"
-        >
-          {{ anchor.label }}
-        </a>
-      </nav>
 
       <section class="banner">
         <div class="title">
@@ -166,11 +157,6 @@ export default {
         { label: "相关影视", href: "./相关影视.html" },
         { label: "周边商城", to: "/shop" },
       ],
-      quickAnchors: [
-        { label: "上海", href: "#shanghai" },
-        { label: "香港", href: "#hongkong" },
-        { label: "互动", href: "#social" },
-      ],
       bannerImages: {
         main: bannerMainImage,
         left: bannerMainImage,
@@ -252,9 +238,18 @@ export default {
 </script>
 
 <style scoped>
+:global(html, body) {
+  background-color: rgb(59, 45, 72);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 .news-page {
   background-color: rgb(59, 45, 72);
   min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
   color: #fff;
 }
 
@@ -263,6 +258,7 @@ export default {
   width: 100%;
   max-width: 1300px;
   padding: 20px;
+  box-sizing: border-box;
   position: relative;
 }
 
@@ -286,7 +282,7 @@ export default {
 }
 
 .title h2:hover {
-  color: aqua;
+  color: #f9d6ff;
   transform: scale(1.05);
 }
 
@@ -299,7 +295,7 @@ export default {
 }
 
 .title a:hover {
-  color: aqua;
+  color: #f9d6ff;
 }
 
 .title a::after {
@@ -309,7 +305,7 @@ export default {
   left: 0;
   width: 0;
   height: 2px;
-  background-color: aqua;
+  background-color: #f9d6ff;
   transition: width 0.3s;
 }
 
@@ -337,6 +333,10 @@ export default {
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.9s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.9s cubic-bezier(0.23, 1, 0.32, 1),
+    filter 0.9s ease;
+  will-change: transform;
 }
 
 .banner-image.main {
@@ -361,14 +361,21 @@ export default {
   display: block;
 }
 
-.banner-top:hover .left {
-  transform: translateX(-100%);
-  transition: all 1.5s;
+.banner-top:hover .banner-image {
+  filter: brightness(1.08) saturate(1.05);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
 }
 
-.banner-top:hover .right {
-  transform: translateX(100%);
-  transition: all 1.5s;
+.banner-top:hover .banner-image.main {
+  transform: translateY(-6px) scale(1.015);
+}
+
+.banner-top:hover .banner-image.left {
+  transform: translateX(-18px) translateY(-4px) scale(1.03);
+}
+
+.banner-top:hover .banner-image.right {
+  transform: translateX(18px) translateY(-4px) scale(1.03);
 }
 
 .destination {
@@ -397,6 +404,14 @@ export default {
   padding: 16px;
   gap: 12px;
   text-align: center;
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+    border-color 0.6s ease, box-shadow 0.6s ease;
+}
+
+.media-placeholder:hover {
+  transform: translateY(-8px);
+  border-color: rgba(210, 180, 255, 0.75);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25);
 }
 
 .media-placeholder video {
@@ -422,23 +437,87 @@ export default {
   background: linear-gradient(45deg, rgba(59, 45, 72, 0.8), rgba(74, 26, 140, 0.6));
   border-radius: 30px;
   padding: 24px;
+  box-sizing: border-box;
   font-family: "华文琥珀", "Microsoft YaHei", sans-serif;
   color: #ceceba;
   font-size: 18px;
   line-height: 1.6;
-  transition: all 0.6s;
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+    background 0.6s ease, color 0.6s ease, box-shadow 0.6s ease;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.text-card:not(.wide) p {
+  margin: 0;
+  padding: 16px 20px 16px 54px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.05);
+  position: relative;
+  font-size: 17px;
+  color: #f6f6f6;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.text-card:not(.wide) p::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(0, 255, 255, 0.6);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
 }
 
 .text-card.wide {
   width: 100%;
   margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  counter-reset: hkSummary;
+  padding: 32px;
+}
+
+.text-card.wide p {
+  margin: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 18px 20px 18px 60px;
+  position: relative;
+  min-height: 120px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.text-card.wide p::before {
+  counter-increment: hkSummary;
+  content: counter(hkSummary, decimal-leading-zero);
+  position: absolute;
+  left: 20px;
+  top: 24px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 255, 255, 0.15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .text-card:hover {
-  background: #fff;
-  color: rgb(59, 45, 72);
-  transform: scale(1.03);
+  background: linear-gradient(135deg, rgba(93, 64, 142, 0.95), rgba(197, 116, 255, 0.35));
+  color: #fff5ff;
+  transform: translateY(-8px);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
 }
 
 .social {
@@ -472,11 +551,29 @@ table {
   color: #fff;
   line-height: 45px;
   width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 14px;
 }
 
 table td {
-  text-align: center;
-  padding: 6px;
+  text-align: left;
+  padding: 10px 12px;
+}
+
+table tr {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+table tr td:first-child {
+  width: 45%;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+
+table tr td:last-child {
+  width: 55%;
 }
 
 table input,
@@ -496,6 +593,12 @@ table textarea {
   resize: none;
 }
 
+table input[type="file"] {
+  padding: 6px;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+}
+
 table input:focus,
 table textarea:focus {
   background: rgba(255, 255, 255, 0.2);
@@ -506,6 +609,12 @@ table textarea:focus {
 table input::placeholder,
 table textarea::placeholder {
   color: rgba(255, 255, 255, 0.6);
+}
+
+caption h5 {
+  color: #fff;
+  font-size: 20px;
+  margin-bottom: 12px;
 }
 
 form button {
@@ -519,6 +628,10 @@ form button {
   cursor: pointer;
   transition: all 0.3s;
   margin-top: 10px;
+  width: 100%;
+  max-width: 280px;
+  align-self: flex-end;
+  box-shadow: 0 8px 20px rgba(0, 255, 255, 0.3);
 }
 
 form button:hover {
@@ -532,39 +645,6 @@ footer {
   margin-top: 50px;
   text-align: center;
   opacity: 0.8;
-}
-
-.side-nav {
-  position: fixed;
-  right: 30px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.side-nav a {
-  display: block;
-  padding: 12px 15px;
-  background: linear-gradient(45deg, rgb(59, 45, 72), #4a1a8c);
-  color: #fff;
-  text-decoration: none;
-  border-radius: 25px;
-  font-family: "华文琥珀", "Microsoft YaHei", sans-serif;
-  font-size: 16px;
-  transition: all 0.3s;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  width: 80px;
-}
-
-.side-nav a:hover {
-  background: linear-gradient(45deg, #4a1a8c, rgb(59, 45, 72));
-  color: aqua;
-  transform: translateX(-5px);
-  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
 }
 
 @media screen and (max-width: 1200px) {
@@ -582,10 +662,6 @@ footer {
 
   .banner-image.left {
     left: 2%;
-  }
-
-  .side-nav {
-    display: none;
   }
 }
 
@@ -644,20 +720,25 @@ footer {
 }
 
 @media screen and (max-width: 768px) {
+  .banner {
+    display: none;
+  }
+
   .news-wrapper {
-    padding: 20px 12px 40px;
+    padding: 20px 0 40px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .banner,
   .destination,
   .social {
     width: 100%;
-    max-width: 460px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    align-self: stretch;
   }
 
   .title {
@@ -665,7 +746,10 @@ footer {
     height: auto;
     gap: 8px;
     width: 100%;
-    max-width: 460px;
+    max-width: none;
+    align-items: flex-start;
+    padding: 12px 16px;
+    text-align: left;
   }
 
   .title a {
@@ -675,15 +759,38 @@ footer {
   .content-row {
     flex-direction: column;
     width: 100%;
-    max-width: 460px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .media-placeholder,
   .text-card {
     width: 100%;
-    align-self: center;
+    align-self: stretch;
+  }
+
+  .content-row {
+    align-items: center;
+  }
+
+  .media-placeholder {
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 16px 18px;
+  }
+
+  .media-placeholder video {
+    width: 100%;
+    height: 200px;
+  }
+
+  .bottom {
+    width: 100%;
+    justify-content: flex-start;
+    padding-left:0px;
+    padding-right: 12px;
+    box-sizing: border-box;
   }
 
   .banner-top {
@@ -697,9 +804,12 @@ footer {
 
   form {
     width: 100%;
-    margin: 0 auto;
+    margin: 0;
     padding: 18px;
-    max-width: 460px;
+    max-width: none;
+    align-self: flex-start;
+    margin-left: 8px;
+    margin-right: auto;
   }
 
   table {
@@ -722,7 +832,7 @@ footer {
 
 @media screen and (max-width: 480px) {
   .news-wrapper {
-    padding: 16px 10px 40px;
+    padding: 16px 0 40px;
   }
 
   .title h2 {
