@@ -14,7 +14,7 @@
           <p>{{ bannerCopy }}</p>
         </div>
         <div class="banner-visual">
-          <span>主视觉占位</span>
+          <img :src="bannerVisual" alt="Disney multi-brand key visual" />
         </div>
       </section>
 
@@ -109,6 +109,7 @@
 <script>
 import HeaderCom from "@/components/Header/HeaderCom.vue";
 import headerLogo from "@/assets/images/logo.jpg";
+import headerBanner from "@/assets/images/tv/top.jpg";
 import mulanPoster from "@/assets/images/tv/mulan.png";
 import slider1Image from "@/assets/images/tv/slider 1.png";
 import slider2Image from "@/assets/images/tv/slider 2.png";
@@ -123,6 +124,8 @@ import jackImage from "@/assets/images/tv/jack.jpg";
 import judyImage from "@/assets/images/tv/judy.jpg";
 import daisyImage from "@/assets/images/tv/daisy.jpg";
 import winnieImage from "@/assets/images/tv/weini.jpg";
+import pigletImage from "@/assets/images/tv/piglet.jpg";
+import steelImage from "@/assets/images/tv/steel.jpg";
 
 export default {
   name: "TvPage",
@@ -138,6 +141,7 @@ export default {
         { label: "相关影视", to: "/tv" },
         { label: "周边商城", to: "/shop" },
       ],
+      bannerVisual: headerBanner,
       bannerCopy:
         "Movie having love and suspense and thriller with immense drama is what your mood wants this time. Let's have an enthralling experience.",
       recommendedMovie: {
@@ -213,6 +217,20 @@ export default {
           image: winnieImage,
           firstAppearance: "首次登场：1926 年《小熊维尼》故事集",
           description: "热爱蜂蜜、待人真诚的小熊维尼提醒我们珍惜简单美好，用善良温暖朋友们的心。",
+        },
+        {
+          id: "piglet",
+          name: "小猪皮杰",
+          image: pigletImage,
+          firstAppearance: "首次登场：1935 年《威尼熊与蜜蜂树》动画短片",
+          description: "胆小却重情义的皮杰总在关键时刻挺身而出，与维尼一起守护百亩森林友谊，是温柔与勇气的代表。",
+        },
+        {
+          id: "ironman",
+          name: "钢铁侠",
+          image: steelImage,
+          firstAppearance: "首次登场：2008 年《钢铁侠》",
+          description: "托尼·斯塔克凭借天才头脑与高科技装甲在漫威宇宙中大放异彩，象征着自我救赎与守护世界的担当。",
         },
       ],
       activeCharacter: null,
@@ -293,8 +311,11 @@ export default {
 .banner-visual {
   flex: 1 1 400px;
   min-height: 300px;
-  border-radius: 30px;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(59, 45, 72, 0.9));
+  padding: 14px;
+  border-radius: 34px;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.12), transparent 45%),
+    radial-gradient(circle at 80% 0%, rgba(148, 119, 255, 0.28), transparent 55%),
+    rgba(10, 6, 20, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -304,15 +325,47 @@ export default {
   color: rgba(255, 255, 255, 0.8);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 25px 60px rgba(9, 5, 30, 0.65);
+  isolation: isolate;
+}
+
+.banner-visual::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 32px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(80, 51, 146, 0.35));
+  z-index: 0;
+  opacity: 0.6;
+  filter: blur(1px);
+}
+
+.banner-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+  display: block;
+  position: relative;
+  z-index: 1;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.25);
+  transition: transform 0.8s ease, filter 0.8s ease;
+  filter: saturate(110%) contrast(1.08);
+}
+
+.banner-visual:hover img {
+  transform: scale(1.025);
+  filter: saturate(115%) contrast(1.12);
 }
 
 .banner-visual::after {
   content: "";
   position: absolute;
-  inset: 0;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 30px;
+  inset: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 28px;
   pointer-events: none;
+  z-index: 2;
 }
 
 .title {
@@ -362,6 +415,25 @@ export default {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
 
+.poster-card::before {
+  content: "";
+  position: absolute;
+  top: -6%;
+  left: -6%;
+  width: 45%;
+  height: 45%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+
+.poster-card:hover::before {
+  opacity: 1;
+}
+
 .poster-image {
   width: 100%;
   height: 100%;
@@ -378,6 +450,7 @@ export default {
   line-height: 1.4;
   opacity: 0;
   transition: opacity 0.4s ease;
+  z-index: 3;
 }
 
 .poster-meta strong {
@@ -388,9 +461,10 @@ export default {
 .poster-card .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: linear-gradient(120deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.65) 60%, rgba(0, 0, 0, 0.8) 100%);
   opacity: 0;
   transition: opacity 0.4s ease;
+  z-index: 1;
 }
 
 .poster-card:hover .overlay {
@@ -402,17 +476,94 @@ export default {
 }
 
 .introduce {
-  flex: 1 1 500px;
+  position: relative;
+  flex: 1 1 620px;
   min-height: 420px;
-  padding: 20px 30px;
-  border-radius: 30px;
-  background: rgba(0, 0, 0, 0.35);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  padding: 36px 48px;
+  border-radius: 32px;
+  background: linear-gradient(135deg, rgba(19, 12, 34, 0.95), rgba(66, 39, 94, 0.92))
+      padding-box,
+    radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.4), transparent 55%) border-box;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 20px 40px rgba(7, 2, 20, 0.65),
+    0 0 30px rgba(157, 121, 255, 0.25),
+    inset 0 0 25px rgba(17, 8, 32, 0.65);
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  font-family: "华文行楷", "Microsoft YaHei", sans-serif;
+  gap: 42px;
+  font-family: "Source Han Serif SC", "Songti SC", "Microsoft YaHei", sans-serif;
+  font-size: 20px;
+  line-height: 1.8;
+  width: 100%;
+  max-width: 850px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+  margin-left: 30px;
+}
+
+.introduce::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(148, 119, 255, 0.55), rgba(255, 174, 236, 0.15));
+  opacity: 0.45;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.introduce::after {
+  content: "";
+  position: absolute;
+  bottom: -38px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140%;
+  height: 90px;
+  background: radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.25), transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 65%);
+  clip-path: polygon(0 35%, 10% 45%, 20% 30%, 32% 55%, 45% 25%, 58% 45%, 70% 28%, 82% 50%, 92% 32%, 100% 40%, 100% 100%, 0 100%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.introduce:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow:
+    0 28px 55px rgba(8, 4, 28, 0.75),
+    0 0 45px rgba(180, 136, 255, 0.35),
+    inset 0 0 30px rgba(24, 10, 44, 0.85);
+}
+
+.introduce p {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 600px;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.92);
+  text-align: justify;
+  font-family: "Source Han Serif SC", "Fira Code", "Microsoft YaHei", sans-serif;
+}
+
+.introduce p:first-of-type {
+  font-weight: 600;
   font-size: 22px;
+}
+
+.introduce p:nth-of-type(2) {
+  background: linear-gradient(120deg, rgba(255, 227, 173, 0.35), rgba(255, 201, 132, 0));
+  padding: 10px 14px;
+  border-radius: 18px;
+  box-shadow: inset 0 0 18px rgba(255, 214, 150, 0.25);
+  font-family: "Brush Script MT", "华文行楷", cursive;
+}
+
+.introduce p:last-of-type {
+  font-family: "Source Han Serif SC", "Consolas", "Microsoft YaHei", sans-serif;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .hot {
