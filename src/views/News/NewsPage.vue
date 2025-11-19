@@ -589,25 +589,170 @@ footer {
   }
 }
 
+@media screen and (max-width: 992px) {
+  .title {
+    padding: 12px 18px;
+  }
+
+  .title h2 {
+    font-size: 26px;
+  }
+
+  .banner-top {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: auto;
+  }
+
+  .banner-image {
+    position: static;
+    width: 100%;
+    height: 220px;
+  }
+
+  .banner-top:hover .left,
+  .banner-top:hover .right {
+    transform: none;
+  }
+
+  .media-placeholder {
+    min-height: 260px;
+  }
+
+  .media-placeholder video {
+    height: 180px;
+  }
+
+  .text-card {
+    min-height: 220px;
+    padding: 20px;
+    font-size: 16px;
+  }
+
+  .bottom {
+    gap: 20px;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  table {
+    line-height: 36px;
+  }
+}
+
 @media screen and (max-width: 768px) {
+  .news-wrapper {
+    padding: 20px 12px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .banner,
+  .destination,
+  .social {
+    width: 100%;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .title {
     flex-direction: column;
     height: auto;
     gap: 8px;
+    width: 100%;
+    max-width: 460px;
+  }
+
+  .title a {
+    display: none;
   }
 
   .content-row {
     flex-direction: column;
+    width: 100%;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .media-placeholder,
   .text-card {
     width: 100%;
+    align-self: center;
+  }
+
+  .banner-top {
+    align-items: center;
+  }
+
+  .banner-image {
+    max-width: 460px;
+    margin: 0 auto;
   }
 
   form {
     width: 100%;
     margin: 0 auto;
+    padding: 18px;
+    max-width: 460px;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  table td {
+    text-align: left;
+  }
+
+  table input,
+  table textarea {
+    width: 100%;
+  }
+
+  form button {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .news-wrapper {
+    padding: 16px 10px 40px;
+  }
+
+  .title h2 {
+    font-size: 22px;
+  }
+
+  .banner-image {
+    height: 180px;
+  }
+
+  .media-placeholder {
+    padding: 12px;
+  }
+
+  .media-caption {
+    font-size: 14px;
+  }
+
+  .text-card {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  table {
+    line-height: 32px;
+  }
+
+  form button {
+    font-size: 15px;
+    padding: 10px 20px;
   }
 }
 </style>
