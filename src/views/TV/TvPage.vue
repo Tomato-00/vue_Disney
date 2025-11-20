@@ -319,7 +319,7 @@ export default {
   min-height: 260px;
   border-radius: 28px;
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02))
+    linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.04))
       border-box;
   border: 1px solid rgba(255, 255, 255, 0.14);
   display: flex;
@@ -332,6 +332,28 @@ export default {
   backdrop-filter: blur(16px);
   z-index: 1;
   overflow: hidden;
+  background-size: 180% 180%;
+  animation: briefHalo 18s linear infinite;
+  transition:
+    transform 0.7s cubic-bezier(0.39, 0.575, 0.28, 0.995),
+    box-shadow 0.7s ease,
+    border-color 0.6s ease,
+    background-position 4s ease;
+}
+
+.brief::before {
+  content: "";
+  position: absolute;
+  width: 160%;
+  height: 160%;
+  top: -40%;
+  left: -30%;
+  border-radius: 50%;
+  background: conic-gradient(from 90deg, rgba(255, 255, 255, 0.2), transparent 45%);
+  opacity: 0.55;
+  filter: blur(25px);
+  animation: briefOrbit 22s linear infinite;
+  pointer-events: none;
 }
 
 .brief::after {
@@ -341,7 +363,9 @@ export default {
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), transparent 55%);
-  opacity: 0.8;
+  opacity: 0.75;
+  mix-blend-mode: screen;
+  transition: opacity 0.6s ease, border-color 0.6s ease;
   pointer-events: none;
 }
 
@@ -355,6 +379,13 @@ export default {
   color: rgba(255, 255, 255, 0.92);
   max-width: 460px;
   margin: 0 auto;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.25),
+    0 5px 25px rgba(0, 0, 0, 0.45);
+  transition:
+    letter-spacing 0.6s ease,
+    text-shadow 0.6s ease,
+    transform 0.6s ease;
 }
 
 .brief p::after {
@@ -367,6 +398,29 @@ export default {
   height: 2px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
   opacity: 0.6;
+  animation: briefUnderline 4s ease-in-out infinite;
+}
+
+.brief:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 28px 55px rgba(0, 0, 0, 0.55),
+    inset 0 0 40px rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.22);
+  background-position: 60% 40%;
+}
+
+.brief:hover::after {
+  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.brief:hover p {
+  letter-spacing: 1.2px;
+  text-shadow:
+    0 0 16px rgba(255, 255, 255, 0.5),
+    0 8px 30px rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px);
 }
 
 .banner-visual {
@@ -492,6 +546,44 @@ export default {
   100% {
     transform: translateX(60%) skewX(-8deg);
     opacity: 0;
+  }
+}
+
+.brief::before,
+.brief::after {
+  will-change: transform, opacity;
+}
+
+@keyframes briefHalo {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes briefOrbit {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes briefUnderline {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: translateX(-50%) scaleX(0.8);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateX(-50%) scaleX(1.1);
   }
 }
 
