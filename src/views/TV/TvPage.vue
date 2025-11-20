@@ -282,75 +282,217 @@ export default {
 }
 
 .banner {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 28px;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 36px;
+  padding: 34px 36px;
+  border-radius: 42px;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.18), transparent 55%),
+    radial-gradient(circle at 85% 10%, rgba(150, 115, 255, 0.28), transparent 60%),
+    linear-gradient(135deg, rgba(38, 28, 65, 0.95), rgba(20, 14, 32, 0.92));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 30px 60px rgba(5, 0, 15, 0.65),
+    inset 0 0 35px rgba(126, 92, 255, 0.1);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.banner::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border-radius: 34px;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 50%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .brief {
-  flex: 1 1 400px;
-  min-height: 280px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.08);
+  position: relative;
+  flex: 1 1 380px;
+  min-height: 260px;
+  border-radius: 28px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02))
+      border-box;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  padding: 38px 34px;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.45),
+    inset 0 0 30px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.brief::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), transparent 55%);
+  opacity: 0.8;
+  pointer-events: none;
 }
 
 .brief p {
-  font-family: "Brush Script MT", "Times New Roman", serif;
-  font-size: 32px;
+  position: relative;
+  font-family: "Source Han Serif SC", "Songti SC", serif;
+  font-size: 28px;
   text-align: center;
-  line-height: 1.4;
+  line-height: 1.6;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.brief p::after {
+  content: "";
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  opacity: 0.6;
 }
 
 .banner-visual {
-  flex: 1 1 400px;
-  min-height: 300px;
-  padding: 14px;
-  border-radius: 34px;
-  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.12), transparent 45%),
-    radial-gradient(circle at 80% 0%, rgba(148, 119, 255, 0.28), transparent 55%),
-    rgba(10, 6, 20, 0.75);
+  flex: 1 1 440px;
+  min-height: 320px;
+  padding: 18px;
+  border-radius: 40px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.14), transparent 45%),
+    radial-gradient(circle at 85% 0%, rgba(169, 111, 255, 0.32), transparent 55%),
+    rgba(6, 4, 18, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.8);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(9, 5, 30, 0.65);
+  box-shadow:
+    0 30px 60px rgba(9, 5, 30, 0.75),
+    inset 0 0 35px rgba(0, 0, 0, 0.4);
   isolation: isolate;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition:
+    transform 0.8s ease,
+    box-shadow 0.8s ease,
+    border-color 0.6s ease;
 }
 
 .banner-visual::before {
   content: "";
   position: absolute;
-  inset: 1px;
+  inset: 6px;
   border-radius: 32px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(80, 51, 146, 0.35));
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.12), rgba(88, 58, 186, 0.5));
   z-index: 0;
-  opacity: 0.6;
-  filter: blur(1px);
+  opacity: 0.7;
+  filter: blur(0.5px);
+  transition: opacity 0.6s ease, transform 0.8s ease;
+}
+
+.banner-visual::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.4;
+  transition: opacity 0.5s ease;
+}
+
+.banner-visual::after,
+.banner-visual::before {
+  will-change: transform, opacity;
 }
 
 .banner-visual img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 24px;
+  border-radius: 22px;
   display: block;
   position: relative;
   z-index: 1;
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.25);
+  box-shadow:
+    inset 0 0 40px rgba(0, 0, 0, 0.35),
+    0 0 35px rgba(110, 80, 205, 0.5);
   transition: transform 0.8s ease, filter 0.8s ease;
-  filter: saturate(110%) contrast(1.08);
+  filter: saturate(112%) contrast(1.1);
+}
+
+.banner-visual::before,
+.banner-visual::after {
+  animation: bannerPulse 10s ease-in-out infinite;
+}
+
+.banner-visual:hover {
+  transform: translateY(-10px) scale(1.015);
+  box-shadow:
+    0 40px 80px rgba(12, 8, 35, 0.85),
+    inset 0 0 45px rgba(3, 1, 12, 0.7);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.banner-visual:hover::before {
+  opacity: 1;
+  transform: scale(1.03) translate(-4px, -6px);
+}
+
+.banner-visual:hover::after {
+  opacity: 0.85;
+  animation: bannerSweep 2.7s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+
+.banner-visual:hover img {
+  transform: scale(1.06);
+  filter: saturate(120%) contrast(1.2);
+}
+
+@keyframes bannerPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.9;
+  }
+}
+
+@keyframes bannerSweep {
+  0% {
+    transform: translateX(-60%) skewX(-8deg);
+    opacity: 0;
+  }
+  20%,
+  60% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(60%) skewX(-8deg);
+    opacity: 0;
+  }
 }
 
 .banner-visual:hover img {
