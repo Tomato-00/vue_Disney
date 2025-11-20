@@ -372,7 +372,7 @@ export default {
 .brief p {
   position: relative;
   font-family: "Source Han Serif SC", "Songti SC", serif;
-  font-size: 28px;
+  font-size: clamp(22px, 2.3vw, 28px);
   text-align: center;
   line-height: 1.6;
   letter-spacing: 0.8px;
@@ -637,6 +637,8 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
+  justify-content: center;
+  align-items: stretch;
 }
 
 .poster-card {
@@ -711,7 +713,7 @@ export default {
 
 .introduce {
   position: relative;
-  flex: 1 1 620px;
+  flex: 0 1 620px;
   min-height: 420px;
   padding: 36px 48px;
   border-radius: 32px;
@@ -733,7 +735,6 @@ export default {
   max-width: 850px;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   overflow: hidden;
-  margin-left: 30px;
 }
 
 .introduce::before {
@@ -946,17 +947,111 @@ export default {
   opacity: 0;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1200px) {
   .tv-wrapper {
-    padding: 20px 16px 50px;
+    padding: 26px 20px 56px;
   }
 
-  .slider-card {
-    flex: 0 0 260px;
+  .banner {
+    padding: 30px;
+    gap: 22px;
+  }
+
+  .brief {
+    flex: 1 1 320px;
+    min-height: 240px;
+    padding: 34px 28px;
+  }
+
+  .banner-visual {
+    min-height: 300px;
+    padding: 16px;
+  }
+
+  .foryou {
+    gap: 24px;
+  }
+
+  .poster-card {
+    flex: 1 1 280px;
+    max-width: 360px;
+  }
+
+  .introduce {
+    margin-left: 0;
+    padding: 32px 36px;
+  }
+
+  .character-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .tv-wrapper {
+    padding: 22px 16px 48px;
+  }
+
+  .banner {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 26px 24px;
+  }
+
+  .brief,
+  .banner-visual {
+    flex: 1 1 100%;
+    min-height: auto;
+  }
+
+  .brief {
+    padding: 30px 24px;
+  }
+
+  .banner-visual {
+    padding: 14px;
+    min-height: 280px;
+  }
+
+  .title h2 {
+    font-size: 28px;
+  }
+
+  .foryou {
+    flex-direction: column;
+    gap: 22px;
   }
 
   .poster-card {
     width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .introduce {
+    padding: 30px 24px;
+    min-height: auto;
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .slider-track {
+    animation-duration: 36s;
+  }
+
+  .slider-card {
+    flex: 0 0 240px;
+    margin: 16px;
+  }
+
+  .character-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .modal-content {
+    width: 92vw;
   }
 }
 
@@ -965,51 +1060,236 @@ export default {
     flex-direction: column;
     align-items: flex-start;
     height: auto;
-    padding: 16px;
+    padding: 14px;
+    gap: 6px;
+  }
+
+  .title h2 {
+    font-size: 24px;
   }
 
   .title a {
     display: none;
   }
 
-  .brief,
-  .banner-visual {
-    flex: 1 1 100%;
-  }
-
-  .foryou {
-    flex-direction: column;
-  }
-
-  .introduce {
-    min-height: auto;
-  }
-
-  .slider-track {
-    animation-duration: 40s;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .tv-wrapper {
-    padding: 16px 12px 40px;
+  .banner {
+    padding: 22px 20px;
+    border-radius: 30px;
+    gap: 20px;
   }
 
   .brief {
-    min-height: 220px;
+    padding: 26px 20px;
   }
 
   .brief p {
-    font-size: 24px;
+    font-size: 22px;
+  }
+
+  .banner-visual {
+    min-height: 260px;
+    padding: 12px;
+  }
+
+  .recommend {
+    margin-top: 16px;
+  }
+
+  .foryou {
+    gap: 20px;
   }
 
   .poster-card {
     min-height: 360px;
   }
 
+  .poster-meta {
+    font-size: 16px;
+  }
+
+  .introduce {
+    min-height: auto;
+    padding: 20px 18px;
+    gap: 20px;
+    font-size: 17px;
+    line-height: 1.55;
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .introduce p {
+    font-size: 16px;
+  }
+
+  .introduce p:first-of-type {
+    font-size: 19px;
+  }
+
+  .hot-slider {
+    margin-top: 18px;
+    border-radius: 24px;
+  }
+
+  .slider-track {
+    animation-duration: 40s;
+  }
+
   .slider-card {
     flex: 0 0 220px;
-    height: 200px;
+    height: 210px;
+    margin: 14px;
+    padding: 18px;
+  }
+
+  .slider-image {
+    height: 130px;
+  }
+
+  .character-grid {
+    gap: 16px;
+  }
+
+  .character-card {
+    padding: 20px;
+  }
+
+  .character-image {
+    height: 140px;
+  }
+
+  .character-name {
+    font-size: 16px;
+  }
+
+  .modal-content {
+    padding: 26px 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .tv-wrapper {
+    padding: 16px 12px 40px;
+  }
+
+  .banner {
+    padding: 18px 16px;
+    border-radius: 24px;
+  }
+
+  .brief {
+    padding: 22px 18px;
+  }
+
+  .banner-visual {
+    min-height: 220px;
+    border-radius: 32px;
+  }
+
+  .poster-card {
+    min-height: 320px;
+  }
+
+  .poster-meta {
+    font-size: 15px;
+  }
+
+  .introduce {
+    padding: 18px 14px;
+    gap: 16px;
+  }
+
+  .introduce p {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .hot-slider {
+    margin-top: 16px;
+  }
+
+  .slider-card {
+    flex: 0 0 200px;
+    height: 190px;
+    margin: 12px;
+  }
+
+  .slider-image {
+    height: 120px;
+  }
+
+  .character-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .character-card {
+    padding: 16px;
+  }
+
+  .character-image {
+    height: 120px;
+  }
+
+  .modal-content {
+    width: 94vw;
+    padding: 22px 16px;
+    border-radius: 16px;
+  }
+
+  .close-button {
+    top: 6px;
+    right: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .tv-wrapper {
+    padding: 14px 10px 36px;
+  }
+
+  .brief {
+    min-height: 200px;
+    padding: 20px 16px;
+  }
+
+  .brief p {
+    font-size: 18px;
+  }
+
+  .banner-visual {
+    min-height: 200px;
+  }
+
+  .poster-card {
+    min-height: 300px;
+  }
+
+  .poster-meta {
+    font-size: 14px;
+  }
+
+  .introduce {
+    padding: 16px 12px;
+    gap: 10px;
+  }
+
+  .introduce p {
+    font-size: 14px;
+  }
+
+  .slider-card {
+    flex: 0 0 180px;
+    height: 170px;
+    margin: 10px;
+  }
+
+  .character-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-content {
+    width: 96vw;
   }
 }
 </style>
