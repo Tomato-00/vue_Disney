@@ -1224,11 +1224,15 @@ export default {
   }
 
   .character-card {
-    padding: 16px;
+    padding: 18px;
+    min-height: auto;
+    aspect-ratio: 1 / 1;
+    justify-content: space-between;
   }
 
   .character-image {
-    height: 120px;
+    height: auto;
+    aspect-ratio: 1 / 1;
   }
 
   .modal-content {
@@ -1285,7 +1289,17 @@ export default {
   }
 
   .character-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .character-card {
+    min-height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .character-image {
+    height: auto;
+    aspect-ratio: 1 / 1;
   }
 
   .modal-content {
