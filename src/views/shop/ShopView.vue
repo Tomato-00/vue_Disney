@@ -403,7 +403,13 @@ export default {
         ],
         follow: ["新浪微博", "官方微信", "联系我们", "公益基金"],
       },
+      pendingAction: null,
     };
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters["user/isAuthed"];
+    },
   },
   methods: {
     updateSearchKeyword(value) {
@@ -434,16 +440,50 @@ export default {
       this.pressedProductId = null;
     },
 
+    ensureAuthenticated(callback) {
+      if (typeof callback !== "function") {
+        return;
+      }
+      if (this.isLoggedIn) {
+        this.pendingAction = null;
+        callback();
+        return;
+      }
+      this.pendingAction = callback;
+      this.$store.dispatch("auth/open", "login");
+    },
+
     // 添加到购物车
     addToCart(product) {
-      console.log("添加到购物车:", product);
-      // 这里添加购物车逻辑
+      this.ensureAuthenticated(() => this.processAddToCart(product));
+    },
+
+    async processAddToCart(product) {
+      if (!product) return;
+      try {
+        await this.$store.dispatch("cart/addItem", { product, quantity: 1 });
+        window.alert("已加入购物车（mock）");
+      } catch (error) {
+        window.alert(error.message || "添加到购物车失败");
+      }
     },
 
     // 立即购买
     buyNow(product) {
-      console.log("立即购买:", product);
-      // 这里添加购买逻辑
+      this.ensureAuthenticated(() => this.processBuyNow(product));
+    },
+
+    async processBuyNow(product) {
+      if (!product) return;
+      try {
+        const order = await this.$store.dispatch("cart/buyNow", {
+          product,
+          quantity: 1,
+        });
+        window.alert(`订单 ${order.orderId} 支付成功（mock）`);
+      } catch (error) {
+        window.alert(error.message || "下单失败，请稍后重试");
+      }
     },
 
     // 回顶部
@@ -579,6 +619,13 @@ export default {
     $route() {
       if (this.$refs.headerRef && this.$refs.headerRef.closeMenu) {
         this.$refs.headerRef.closeMenu();
+      }
+    },
+    isLoggedIn(newValue) {
+      if (newValue && typeof this.pendingAction === "function") {
+        const action = this.pendingAction;
+        this.pendingAction = null;
+        action();
       }
     },
   },

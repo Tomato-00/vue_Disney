@@ -28,7 +28,12 @@
             <label>密码</label>
             <input v-model.trim="loginForm.password" type="password" placeholder="请输入密码" required />
           </div>
-          <button class="primary" type="submit">登录</button>
+          <p v-if="loginError" class="form-feedback error" role="alert">
+            {{ loginError }}
+          </p>
+          <button class="primary" type="submit" :disabled="authLoading">
+            {{ authLoading ? "登录中..." : "登录" }}
+          </button>
         </form>
 
         <form v-else @submit.prevent="onRegister">
@@ -44,7 +49,12 @@
             <label>确认密码</label>
             <input v-model.trim="registerForm.confirmPassword" type="password" placeholder="再次输入密码" required />
           </div>
-          <button class="primary" type="submit">注册</button>
+          <p v-if="registerError" class="form-feedback error" role="alert">
+            {{ registerError }}
+          </p>
+          <button class="primary" type="submit" :disabled="authLoading">
+            {{ authLoading ? "提交中..." : "注册" }}
+          </button>
         </form>
       </div>
     </div>
@@ -65,6 +75,8 @@ export default {
         password: "",
         confirmPassword: "",
       },
+      loginError: "",
+      registerError: "",
     };
   },
   computed: {
@@ -73,6 +85,9 @@ export default {
     },
     activeTab() {
       return (this.$store.state.auth && this.$store.state.auth.activeTab) || "login";
+    },
+    authLoading() {
+      return (this.$store.state.user && this.$store.state.user.loading) || false;
     },
   },
   mounted() {
@@ -84,7 +99,12 @@ export default {
     modalVisible(visible) {
       if (visible) {
         this.focusContainer();
+      } else {
+        this.resetForms();
       }
+    },
+    activeTab() {
+      this.clearFeedback();
     },
   },
   methods: {
@@ -95,25 +115,58 @@ export default {
       });
     },
     handleClose() {
+      this.resetForms();
       this.$store.dispatch("auth/close");
       this.$emit("close");
     },
     switchTo(tab) {
       this.$store.dispatch("auth/switchTo", tab);
     },
+    clearFeedback() {
+      this.loginError = "";
+      this.registerError = "";
+    },
+    resetForms() {
+      Object.assign(this.loginForm, {
+        email: "",
+        password: "",
+      });
+      Object.assign(this.registerForm, {
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+      this.clearFeedback();
+    },
     async onLogin() {
-      // 在此处对接实际登录逻辑（API 调用 / 校验等）
-      this.$emit("login", { ...this.loginForm });
-      this.$store.dispatch("auth/close");
+      this.loginError = "";
+      try {
+        await this.$store.dispatch("user/login", { ...this.loginForm });
+        this.$store.dispatch("auth/close");
+        this.$emit("login-success", { email: this.loginForm.email });
+        this.resetForms();
+      } catch (error) {
+        this.loginError = error.message || "登录失败，请重试";
+      }
     },
     async onRegister() {
       if (this.registerForm.password !== this.registerForm.confirmPassword) {
-        alert("两次输  入的密码不一致");
+        this.registerError = "两次输入的密码不一致";
         return;
       }
-      // 在此处对接实际注册逻辑
-      this.$emit("register", { email: this.registerForm.email });
-      this.$store.dispatch("auth/close");
+      this.registerError = "";
+      try {
+        await this.$store.dispatch("user/register", {
+          email: this.registerForm.email,
+          password: this.registerForm.password,
+        });
+        this.$store.dispatch("auth/close");
+        this.$emit("register-success", { email: this.registerForm.email });
+        window.alert("注册成功，已自动登录");
+        this.resetForms();
+      } catch (error) {
+        this.registerError = error.message || "注册失败，请重试";
+      }
     },
   },
 };
@@ -187,6 +240,14 @@ export default {
   border: 1px solid #ddd;
   border-radius: 6px;
 }
+.form-feedback {
+  margin: -4px 0 12px;
+  font-size: 12px;
+  text-align: left;
+}
+.form-feedback.error {
+  color: #e53935;
+}
 button.primary {
   width: 100%;
   height: 38px;
@@ -195,6 +256,11 @@ button.primary {
   color: #fff;
   cursor: pointer;
   background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(59, 45, 72, 0.95) 100%);
+  transition: opacity 0.2s ease;
+}
+button.primary[disabled] {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 </style>
 

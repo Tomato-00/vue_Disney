@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "@/store";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,9 @@ const routes = [
     name: "Shop",
     component: () =>
       import(/* webpackChunkName: "shop" */ "@/views/shop/ShopView.vue"),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/tv",
@@ -34,6 +38,23 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  if (!requiresAuth) {
+    next();
+    return;
+  }
+
+  const isAuthed = store.getters["user/isAuthed"];
+  if (isAuthed) {
+    next();
+    return;
+  }
+
+  store.dispatch("auth/open", "login");
+  next(false);
 });
 
 export default router;
