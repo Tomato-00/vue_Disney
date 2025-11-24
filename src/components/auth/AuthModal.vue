@@ -108,7 +108,7 @@ export default {
     },
     async onRegister() {
       if (this.registerForm.password !== this.registerForm.confirmPassword) {
-        alert("两次输入的密码不一致");
+        alert("两次输  入的密码不一致");
         return;
       }
       // 在此处对接实际注册逻辑
